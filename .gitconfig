@@ -1,0 +1,47 @@
+# To install, add the following at the top of ~/.gitconfig:
+# [include]
+#         path = ~/dotfiles/.gitconfig
+[alias]
+	push = push --recurse-submodules=check
+	last = !git lg ORIG_HEAD..
+	unstage = reset HEAD --
+	st = status -sb
+	ci = commit
+	co = checkout
+	smu = submodule update
+	smur = submodule update --recursive
+	lg = log --color --graph --pretty=format:'%C(auto)%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+	lb = log --graph --simplify-by-decoration --pretty=format:'%d' --all
+	lgv = !git lg --boundary @{u}...HEAD
+	lga = !git lg --all
+	pr = pull --rebase --stat
+	diffc = diff --cached
+	fa = fetch --all
+	up = !sh -c 'git pull --rebase --prune && git log --pretty=format:\"%Cred%ae %Creset- %C(yellow)%s %Creset(%ar)\" HEAD@{1}..'
+	top = rev-parse --show-toplevel
+	ri = rebase --interactive
+	serve = daemon --reuseaddr --verbose --base-path=. --export-all ./.git
+[rerere]
+	enabled = true
+[core]
+	pager = less -F
+	whitespace = trailing-space,space-before-tab,cr-at-eol
+[push]
+	default = current
+[color]
+	ui = auto
+	grep = auto
+[color "branch"]
+	upstream = cyan
+[gui]
+	gcwarning = false
+[grep]
+	lineNumber = true
+[column]
+	ui = auto
+[rebase]
+	stat = true
+[status]
+	submoduleSummary = true
+[diff]
+	submodule = log
