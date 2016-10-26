@@ -1,4 +1,4 @@
- # Dotfiles
+# Dotfiles
 
 Some of my dotfiles used on Archlinux, Ubuntu and mingw (from git for windows).
 
