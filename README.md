@@ -30,7 +30,7 @@ alias emacs="/c/Program\ Files\ \(x86\)/emacs-24.4/bin/emacs.exe"
 
 ## gitconfig
 
-```
+``` ini
 # include generic config
 [include]
         path = ~/dotfiles/.gitconfig
