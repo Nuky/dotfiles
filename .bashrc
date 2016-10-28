@@ -22,6 +22,9 @@ alias kl='l'
 alias l='ls'
 alias lq='la'
 alias lk='l'
+# workarounds
+alias sudo="sudo " # enable alias expansion of sudoified command
+
 
 # g == git
 if [[ -f /usr/share/git/completion/git-completion.bash ]]; then
