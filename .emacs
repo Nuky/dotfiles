@@ -79,8 +79,9 @@
 ;; if the script has a first line of "#!" then do chmod a+x
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
-;; delete trailing whitespaces on save
-(add-hook 'write-file-hooks 'delete-trailing-whitespace)
+;; delete trailing whitespaces on save (source code only)
+(add-hook 'before-save-hook '(lambda() (when (derived-mode-p 'prog-mode)
+					 (delete-trailing-whitespace))))
 
 ;; frame title
 (setq frame-title-format '("%b" (buffer-file-name ": %f") " [" (:eval mode-name) "]"))
