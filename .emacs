@@ -200,6 +200,13 @@
 (global-set-key [C-M-up] 'scroll-down-line)            ;; Scroll line by line...
 (global-set-key [C-M-down] 'scroll-up-line)            ;; ...leaving point in place
 
+;; [C-$] Toggle hiding indented lines based on point position
+(defun selective-display-on-column-at-point ()
+  "Activate selective display based on the column at point"
+  (interactive)
+  (set-selective-display (if selective-display nil (+ 1 (current-column)))))
+(global-set-key [(control $)] 'selective-display-on-column-at-point)
+
 ;; [C-c "] [C-c <].. Wrap selection/word with paired chars
 (defun wrap-selection-or-word-with-chars-around (firstchar &optional secondchar)
   "Inserts chars around selected text or current word"
