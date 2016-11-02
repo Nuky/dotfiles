@@ -16,6 +16,11 @@ alias ll='ls -l'
 alias lld='ll -d */'
 eval $(dircolors -b) # colors for lsd -(*,*)_
 alias lsd='ls -d */'
+if [[ "$OSTYPE" == "msys" ]]; then
+    alias open='start'
+elif (( EUID )); then
+    alias open='xdg-open'
+fi
 # frequent typos :D
 alias k='l'
 alias kl='l'
