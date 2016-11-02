@@ -48,6 +48,7 @@ bind '"\e[3;5~":kill-word'            # ctrl-del kills chars forward (Alt-d)
 bind '"\M-;":yank-last-arg'           # insert last word of previous line
 bind 'set completion-ignore-case on'  # case-insensitive TAB completion
 bind '"\C-f":menu-complete'           # ctrl-F to cycle through completions
+bind '"\eh": "\C-a\eb\ed\C-y\e#man \C-y\C-m\C-p\C-p\C-a\C-d\C-e"' # poor man's run-help
 
 # change PROMPT_COMMAND (ie: PS1) to support both git and venv
 if [[ -f /usr/share/git/completion/git-prompt.sh ]]; then
