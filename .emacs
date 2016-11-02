@@ -10,7 +10,7 @@
 
 (setq my-init-file-start-time (current-time))
 
-;; set garbace collector threshold to 10MB, considerably speeding up emacs
+;; set garbage collector threshold to 10MB, considerably speeding up emacs
 (setq gc-cons-threshold (* 10 1024 1024))
 
 ;; setup a cozy welcome screen
@@ -230,5 +230,5 @@
 ;; Replace GNU advertising
 (defun display-startup-echo-area-message ()
   (message "All done in %.02fs, %s%s"
-	   (float-time (time-since my-init-file-start-time))
-	   (user-login-name) ". \\o/"))
+           (float-time (time-since my-init-file-start-time))
+           (user-login-name) ". \\o/"))
