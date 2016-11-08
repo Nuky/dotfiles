@@ -89,6 +89,13 @@
 ;; windmove -- [M-arrows] to move from window to window
 (windmove-default-keybindings 'meta)
 
+;; swap buffers à la windmove
+(use-package buffer-move :ensure t
+  :bind (([M-S-up] . buf-move-up)
+	 ([M-S-down] . buf-move-down)
+	 ([M-S-left] . buf-move-left)
+	 ([M-S-right] . buf-move-right)))
+
 ;; ido -- [C-x C-f] [C-x b] smart completion
 (ido-mode 1)
 (setq ido-everywhere t)                 ;; use it for as many file dialogs as possible
@@ -104,13 +111,6 @@
   (add-to-list 'ido-ignore-buffers "*Completions")
   (add-to-list 'ido-ignore-buffers "^[tT][aA][gG][sS]$")
 )
-
-;; swap buffers à la windmove
-(use-package buffer-move :ensure t
-  :bind (([M-S-up] . buf-move-up)
-	 ([M-S-down] . buf-move-down)
-	 ([M-S-left] . buf-move-left)
-	 ([M-S-right] . buf-move-right)))
 
 ;; [M-x] [M-X] idoize execute command
 (use-package smex :ensure t
