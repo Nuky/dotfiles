@@ -117,9 +117,9 @@
   :bind (("M-x" . smex)
 	 ("M-X" . smex-major-mode-commands)))
 
-;; [M-.] idoize imenu
+;; [M-§] idoize imenu
 (use-package idomenu :ensure t
-  :bind ("M-." . idomenu))
+  :bind ("M-§" . idomenu))
 
 ;; [M-x magit] Git interface
 (use-package magit :ensure t
