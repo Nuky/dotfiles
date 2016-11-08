@@ -155,6 +155,9 @@
   (define-key elpy-mode-map (kbd "M-<right>") nil)   ;; ...keybinds !
   (setq elpy-rpc-backend "jedi"))
 
+;; .json files support
+(use-package json-mode :ensure t :defer t)
+
 ;; .yml files support
 (use-package yaml-mode :ensure t
   :mode ("\\.yml$" . yaml-mode))
