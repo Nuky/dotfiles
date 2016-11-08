@@ -158,6 +158,9 @@
 ;; .json files support
 (use-package json-mode :ensure t :defer t)
 
+;; .lua files support
+(use-package lua-mode :defer t :ensure t)
+
 ;; .yml files support
 (use-package yaml-mode :ensure t
   :mode ("\\.yml$" . yaml-mode))
