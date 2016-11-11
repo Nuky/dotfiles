@@ -39,6 +39,11 @@
   (package-install 'use-package))
 (setq use-package-verbose t)            ; log package loading times
 
+(eval-when-compile
+  (require 'use-package))
+(require 'diminish)
+(require 'bind-key)
+
 ;;; usual tweaks
 (setq ring-bell-function 'ignore)                    ; NO stupid bell sound
 (scroll-bar-mode -1)                                 ; No scrollbar
