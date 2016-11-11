@@ -180,7 +180,7 @@
 ; when graphical interface
 (when (display-graphic-p)
   (blink-cursor-mode 0)                                ;; static cursor
-  (set-face-underline-p 'highlight nil)                ;; fix wombat theme with hl-line
+  (set-face-underline 'highlight nil)                  ;; fix wombat theme with hl-line
   (set-face-foreground 'highlight nil)                 ;; fix wombat theme with hl-line
 )
 
