@@ -1,6 +1,6 @@
 # Dotfiles
 
-Some of my dotfiles used on Archlinux, Ubuntu and mingw (from git for windows).
+Some of my dotfiles used on Arch, Ubuntu and mingw (from git for windows).
 
 # Installation
 
@@ -19,13 +19,13 @@ alias emacs="/c/Program\ Files\ \(x86\)/emacs-24.4/bin/emacs.exe"
 ## emacs
 
 ``` elisp
-;; Load generic version
-;(package-initialize)
+;;; Load generic version
+;;(package-initialize)
 (load "~/dotfiles/.emacs")
 
-;; Specific config
+;;; Specific config
 
-;; Generated stuff below !
+;;; Generated stuff below !
 ```
 
 ## gitconfig
