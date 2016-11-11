@@ -76,12 +76,17 @@
 (setq delete-auto-save-files t)                      ; Delete #autosave# files on save
 ;;(global-auto-revert-mode t)                        ; Auto reload files when modified
 ;;(dynamic-completion-mode t)
+(setq-default indent-tabs-mode nil)                  ; Use space to indent by default
+(setq-default tab-width 4)                           ; Represent tabs with 4 spaces
 
 ;; forbid moving point into read-only part of the prompt
 (plist-put minibuffer-prompt-properties 'point-entered 'minibuffer-avoid-prompt)
 
 ;; if the script has a first line of "#!" then do chmod a+x
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+
+;; show trailing whitespaces (source code only)
+(add-hook 'prog-mode-hook (lambda () (interactive) (setq show-trailing-whitespace 1)))
 
 ;; delete trailing whitespaces on save (source code only)
 (add-hook 'before-save-hook '(lambda() (when (derived-mode-p 'prog-mode)
