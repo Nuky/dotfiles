@@ -106,34 +106,45 @@
          ("M-S-<left>" . buf-move-left)
          ("M-S-<right>" . buf-move-right)))
 
-;;; ido -- [C-x C-f] [C-x b] smart completion
-(ido-mode 1)
-(setq ido-everywhere t)                 ; use it for as many file dialogs as possible
-(setq ido-enable-flex-matching t)       ; fuzzy matching
-(setq ido-confirm-unique-completion t)  ; if TAB completes uniquely, wait for RET
-(setq ido-use-virtual-buffers t)        ; remember previously opened files
-(setq ido-use-filename-at-point 'guess) ; enable ffap magic
-(setq ido-use-url-at-point 'guess)      ; enable ffap magic
-(with-eval-after-load "ido"
-  (add-to-list 'ido-ignore-buffers "^ ")
-  (add-to-list 'ido-ignore-buffers "*Messages*")
-  (add-to-list 'ido-ignore-buffers "*Buffer")
-  (add-to-list 'ido-ignore-buffers "*Completions")
-  (add-to-list 'ido-ignore-buffers "^[tT][aA][gG][sS]$")
-)
-
-;;; [M-x] [M-X] idoize execute command
-(use-package smex :ensure t
-  :bind (("M-x" . smex)
-         ("M-X" . smex-major-mode-commands)))
-
-;;; [M-§] idoize imenu
-(use-package idomenu :ensure t
-  :bind ("M-§" . idomenu))
-
-;;; [M-x magit] Git interface
-(use-package magit :ensure t :defer t
+;;; ivy -- interactive completion for most things
+(use-package ivy :ensure t
+  :diminish ivy-mode
+  :commands ivy-completing-read
+  :init ; this was extracted from ivy-mode function to allow lazy-loading
+  (setq completing-read-function 'ivy-completing-read)
   :config
+  (use-package flx :ensure t)        ; automatically used for ivy--regex-fuzzy
+  (ivy-mode 1)                       ; properly enable ivy everywhere
+  (setq ivy-use-virtual-buffers t)   ; add recent buffers when switching buffers
+  (setq ivy-count-format "(%d/%d) ") ; display number of matches in prompt
+  ;; use fuzzy flx matching by default
+  (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
+  (setq ivy-initial-inputs-alist nil)
+  ;; somewhat hide rarely used buffers
+  (add-to-list 'ivy-ignore-buffers "^\*")
+  (add-to-list 'ivy-ignore-buffers "^[tT][aA][gG][sS]$")
+  :bind (([remap switch-to-buffer] . ivy-switch-buffer)
+         ([remap switch-to-buffer-other-window] . ivy-switch-buffer-other-window)))
+
+;; even better completion for some functions
+(use-package counsel :ensure t
+  :config
+  (use-package smex :ensure t)       ; automatically used for counsel-M-x
+  :bind (("M-x" . counsel-M-x)
+         ("C-x C-f" . counsel-find-file)
+         ("C-h f" . counsel-describe-function)
+         ("C-h v" . counsel-describe-variable)
+         ("M-§" . counsel-imenu)))
+
+;; incremental search powered by ivy
+(use-package swiper :ensure t
+  :bind ("C-s" . swiper))
+
+;;; magit -- Git interface
+(use-package magit :ensure t
+  :defer t
+  :config
+  (setq magit-completing-read-function 'ivy-completing-read)
   (setq exec-path (add-to-list 'exec-path "C:/Program Files (x86)/Git/bin")))
 
 ;;; Dockerfile files support
