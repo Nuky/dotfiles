@@ -104,7 +104,9 @@ if command -v man >/dev/null 2>&1; then
     }
 fi
 
-# Utility to toggle proxy at thales
+# Utilities for managing the proxy at Thales
+
+# Set environment proxy variables
 # Note: username can be specified, but it will default to TGI if set, or userid.
 setproxy()
 {
@@ -116,7 +118,7 @@ setproxy()
 	    echo "Usage: setproxy [<username> | on | off | help]"
 	    ;;
 	off)
-	    unset http_proxy https_proxy no_proxy HTTP_PROXY HTTPS_PROXY NO_PROXY
+	    unset {{http,https,no,all}_proxy,{HTTP,HTTPS,NO,ALL}_PROXY}
 	    ;;
 	""|on)
 	    u="${TGI:-$(id -u -n)}"
@@ -125,9 +127,32 @@ setproxy()
 	    u="${u:-$1}"
 	    read -s -p "Password for $u: " p
 	    echo
-	    export {HTTP_PROXY,http_proxy}="http://$u:$p@proxy.theresis.org:80"
-	    export {HTTPS_PROXY,https_proxy}="https://$u:$p@proxy.theresis.org:3128"
-	    export {NO_PROXY,no_proxy}="localhost,127.0.0.1,.theresis.org"
+	    export {{http,https,all}_proxy,{HTTP,HTTPS,ALL}_PROXY}="http://$u:$p@proxy.theresis.org:80"
+	    export {no_proxy,NO_PROXY}="localhost,127.0.0.1,.theresis.org"
 	    ;;
     esac
 }
+
+# Run a command with proxy variables environment
+proxify()
+{
+    if [[ ! -v http_proxy ]]; then
+        local u="${TGI:-$(id -u -n)}"
+        local p
+        read -s -p "Password for $u: " p
+        echo
+        env {{http,https,all}_proxy,{HTTP,HTTPS,ALL}_PROXY}="http://$u:$p@proxy.theresis.org:80" "$@"
+    else
+        "$@"
+    fi
+}
+alias proxify="proxify "     # enable alias expansion
+declare -F _command >/dev/null && complete -F _command proxify # enable nested tab completion
+
+# Run a command without proxy variables environment
+unproxify()
+{
+    env --unset={{http,https,no,all}_proxy,{HTTP,HTTPS,NO,ALL}_PROXY} "$@"
+}
+alias unproxify="unproxify "   # enable alias expansion
+declare -F _command >/dev/null && complete -F _command unproxify # enable nested tab completion
