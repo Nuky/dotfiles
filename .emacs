@@ -138,6 +138,8 @@
 
 ;; incremental search powered by ivy
 (use-package swiper :ensure t
+  :config
+  (add-to-list 'ivy-re-builders-alist '(swiper . ivy--regex-plus))
   :bind ("C-s" . swiper))
 
 ;;; magit -- Git interface
