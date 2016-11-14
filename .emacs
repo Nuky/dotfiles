@@ -1,5 +1,6 @@
-;; Emacs 25.1
+;; -*- emacs-lisp -*-
 ;;
+;; Works on Emacs 25.1.1
 ;; Uses builtin package.el and use-package.
 ;;
 ;; To install, simply symlink or add the following to ~/.emacs:
@@ -10,11 +11,11 @@
 
 (setq my-init-file-start-time (current-time))
 
-;;; set garbage collector threshold to 10MB, considerably speeding up emacs
+;; set garbage collector threshold to 10MB, considerably speeding up emacs
 (setq gc-cons-threshold (* 10 1024 1024))
 
-;;; setup a cozy welcome screen
-(setq inhibit-startup-message t)    ; No startup message in minibuffer
+;; setup a cozy welcome screen
+(setq inhibit-startup-message t)     ;; No startup message in minibuffer
 (setq initial-scratch-message
       (format (concat ";; Hi there, this is %s\n"
                       ";; you might want to visit me %s\n")
@@ -27,7 +28,7 @@
   (load-theme 'wombat)                                 ; cool dark builtin theme
 )
 
-;;; setup package repos for M-x package-*
+;; setup package repos for M-x package-*
 (require 'package)
 (package-initialize)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
@@ -76,8 +77,8 @@
 (setq delete-auto-save-files t)                      ; Delete #autosave# files on save
 ;;(global-auto-revert-mode t)                        ; Auto reload files when modified
 ;;(dynamic-completion-mode t)
-(setq-default indent-tabs-mode nil)                  ; Use space to indent by default
-(setq-default tab-width 4)                           ; Represent tabs with 4 spaces
+(setq-default indent-tabs-mode nil)                  ; Indent with spaces by default
+(setq-default tab-width 4)                           ; Tabs are 4 chars wide
 
 ;; forbid moving point into read-only part of the prompt
 (plist-put minibuffer-prompt-properties 'point-entered 'minibuffer-avoid-prompt)
@@ -98,7 +99,7 @@
 ;;; windmove -- [M-arrows] to move from window to window
 (windmove-default-keybindings 'meta)
 
-;;; swap buffers windmove style
+;;; swap buffers like windmove
 (use-package buffer-move :ensure t
   :bind (("M-S-<up>" . buf-move-up)
          ("M-S-<down>" . buf-move-down)
@@ -157,10 +158,10 @@
   (use-package jedi :ensure t)
   (use-package company-quickhelp :ensure t)
   (company-quickhelp-mode)
-  (define-key elpy-mode-map (kbd "M-<up>") nil)      ; do not...
-  (define-key elpy-mode-map (kbd "M-<down>") nil)    ; ...overwrite...
-  (define-key elpy-mode-map (kbd "M-<left>") nil)    ; ...windmove...
-  (define-key elpy-mode-map (kbd "M-<right>") nil)   ; ...keybinds !
+  (define-key elpy-mode-map (kbd "M-<up>") nil)    ; do not...
+  (define-key elpy-mode-map (kbd "M-<down>") nil)  ; ...overwrite...
+  (define-key elpy-mode-map (kbd "M-<left>") nil)  ; ...windmove...
+  (define-key elpy-mode-map (kbd "M-<right>") nil) ; ...keybinds !
   (setq elpy-rpc-backend "jedi"))
 
 ;;; .json files support
@@ -178,14 +179,14 @@
   :mode (("\\.obj$" . wavefront-obj-mode)
          ("\\.mtl$" . wavefront-obj-mode)))
 
-;;; when console interface
+;;; tweaks when console
 (unless (display-graphic-p)
   (normal-erase-is-backspace-mode -1)                  ; Fix delete key
   (set-face-foreground 'font-lock-comment-face "red")  ; Better colors ...
   (set-face-foreground 'font-lock-string-face "green") ; ... for the terminal
 )
 
-;;; when graphical interface
+;;; tweaks when graphical
 (when (display-graphic-p)
   (blink-cursor-mode 0)                                ; static cursor
   (set-face-underline 'highlight nil)                  ; fix wombat theme with hl-line
