@@ -201,6 +201,7 @@
   (blink-cursor-mode 0)                                ; static cursor
   (set-face-underline 'highlight nil)                  ; fix wombat theme with hl-line
   (set-face-foreground 'highlight nil)                 ; fix wombat theme with hl-line
+  (global-unset-key "\C-z")                            ; only keep C-x z to suspend-frame
 )
 
 ;;; keymaps for console
