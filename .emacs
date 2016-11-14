@@ -150,6 +150,16 @@
 ;;; Markdown files support
 (use-package markdown-mode :ensure t :defer t)
 
+;;; C/C++ IDE
+(use-package cc-mode
+  :config
+  (defvaralias 'c-basic-offset 'tab-width)
+  ;; tabs for indentation, space for alignment
+  (setq-default indent-tabs-mode t) ; has to be on for smart-tabs
+  (use-package smart-tabs-mode :ensure t)
+  (smart-tabs-insinuate 'c++)
+  :mode ("\\.h$" . c++-mode))
+
 ;;; Python IDE
 (use-package elpy
   :commands elpy-enable
