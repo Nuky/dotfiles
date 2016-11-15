@@ -22,7 +22,6 @@
               (replace-regexp-in-string "\n" "" (emacs-version))
               (abbreviate-file-name (or load-file-name buffer-file-name))))
 (when (display-graphic-p)
-  (modify-frame-parameters nil '((wait-for-wm . nil))) ; Faster font change (really?)
   (add-to-list 'initial-frame-alist '(height . 48))    ; Slightly bigger initial frame
   (add-to-list 'initial-frame-alist '(width . 120))    ; Slightly bigger initial frame
   (load-theme 'wombat)                                 ; cool dark builtin theme
