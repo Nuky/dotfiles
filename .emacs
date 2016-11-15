@@ -15,17 +15,17 @@
 (setq gc-cons-threshold (* 10 1024 1024))
 
 ;; setup a cozy welcome screen
-(setq inhibit-startup-message t)     ;; No startup message in minibuffer
+(setq inhibit-startup-message t)        ; No startup message in minibuffer
 (setq initial-scratch-message
       (format (concat ";; Hi there, this is %s\n"
                       ";; you might want to visit me %s\n")
               (replace-regexp-in-string "\n" "" (emacs-version))
               (abbreviate-file-name (or load-file-name buffer-file-name))))
-(when (display-graphic-p)
-  (add-to-list 'initial-frame-alist '(height . 48))    ; Slightly bigger initial frame
-  (add-to-list 'initial-frame-alist '(width . 120))    ; Slightly bigger initial frame
-  (load-theme 'wombat)                                 ; cool dark builtin theme
-)
+(when (> (display-color-cells) 16)
+  (load-theme 'wombat)                         ; cool dark builtin theme
+  (set-face-underline 'highlight nil)          ; fix wombat theme with hl-line
+  (set-face-foreground 'highlight nil))        ; fix wombat theme with hl-line
+  (set-face-background 'mode-line "firebrick") ; make active buffer more visible
 
 ;; setup package repos for M-x package-*
 (require 'package)
@@ -203,21 +203,10 @@
 
 ;;; tweaks when console
 (unless (display-graphic-p)
-  (normal-erase-is-backspace-mode -1)                  ; Fix delete key
   (set-face-foreground 'font-lock-comment-face "red")  ; Better colors ...
   (set-face-foreground 'font-lock-string-face "green") ; ... for the terminal
-)
-
-;;; tweaks when graphical
-(when (display-graphic-p)
-  (blink-cursor-mode 0)                                ; static cursor
-  (set-face-underline 'highlight nil)                  ; fix wombat theme with hl-line
-  (set-face-foreground 'highlight nil)                 ; fix wombat theme with hl-line
-  (global-unset-key "\C-z")                            ; only keep C-x z to suspend-frame
-)
-
-;;; keymaps for console
-(unless (display-graphic-p)
+  (normal-erase-is-backspace-mode -1)                  ; Fix delete key
+  ;; fix keymaps
   (define-key function-key-map "\e[1;5H" [C-home])
   (define-key function-key-map "\e[1;5F" [C-end])
   (define-key function-key-map "\e[1;5A" [C-up])
@@ -228,6 +217,13 @@
   (define-key function-key-map "\e[1;3C" [M-right])
   (define-key function-key-map "\e[1;3A" [M-up])
   (define-key function-key-map "\e[1;3B" [M-down]))
+
+;;; tweaks when graphical
+(when (display-graphic-p)
+  (blink-cursor-mode 0)                                ; static cursor
+  (add-to-list 'initial-frame-alist '(height . 48))    ; Slightly bigger initial frame
+  (add-to-list 'initial-frame-alist '(width . 120))    ; Slightly bigger initial frame
+  (global-unset-key "\C-z"))                           ; only keep C-x z to suspend-frame
 
 ;;; custom keyboard binds
 (global-set-key [(control a)] 'mark-whole-buffer)        ; Select whole buffer
