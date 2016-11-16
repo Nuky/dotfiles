@@ -58,7 +58,7 @@
 (setq font-lock-maximum-decoration t)                ; Unleash a rainbow of colors
 (global-font-lock-mode t)                            ; Enable colors
 (show-paren-mode t)                                  ; Highlight matching paren
-(global-hl-line-mode (if (display-graphic-p) 1 0))   ; Highlight current line everywhere
+(global-hl-line-mode (- (display-color-cells) 16))   ; Highlight current line everywhere
 (auto-image-file-mode t)                             ; Open images NOT in raw data
 (setq scroll-step 3)                                 ; Scroll lines 3 by 3
 (setq next-screen-context-lines 3)                   ; Page up/down keep 3 lines
