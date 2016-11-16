@@ -22,10 +22,10 @@
               (replace-regexp-in-string "\n" "" (emacs-version))
               (abbreviate-file-name (or load-file-name buffer-file-name))))
 (when (> (display-color-cells) 16)
-  (load-theme 'wombat)                         ; cool dark builtin theme
-  (set-face-underline 'highlight nil)          ; fix wombat theme with hl-line
-  (set-face-foreground 'highlight nil))        ; fix wombat theme with hl-line
-  (set-face-background 'mode-line "firebrick") ; make active buffer more visible
+  (load-theme 'wombat)                          ; cool dark builtin theme
+  (set-face-underline 'highlight nil)           ; fix wombat theme with hl-line
+  (set-face-foreground 'highlight nil)          ; fix wombat theme with hl-line
+  (set-face-background 'mode-line "firebrick")) ; make active buffer more visible
 
 ;; setup package repos for M-x package-*
 (require 'package)
