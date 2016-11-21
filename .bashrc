@@ -86,6 +86,8 @@ export GIT_PS1_SHOWCOLORHINTS=1
 # don't clutter history too much
 export HISTCONTROL=ignoreboth
 export HISTIGNORE='history*'
+export HISTSIZE=1000
+export HISTFILESIZE=2000
 
 # proper defaults
 export EDITOR=vim
