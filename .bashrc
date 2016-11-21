@@ -30,7 +30,6 @@ alias lk='l'
 # workarounds
 alias sudo="sudo " # enable alias expansion of sudoified command
 
-
 # g == git
 if [[ -f /usr/share/git/completion/git-completion.bash ]]; then
     source /usr/share/git/completion/git-completion.bash
@@ -91,6 +90,9 @@ export HISTFILESIZE=2000
 
 # proper defaults
 export EDITOR=vim
+shopt -s histappend             # do not overwrite history file
+shopt -s checkwinsize           # adjust to terminal window size
+shopt -s globstar               # enable ** recursive wildcard
 
 # Colored man pages
 if command -v man >/dev/null 2>&1; then
