@@ -142,11 +142,16 @@
   :bind ("C-s" . swiper))
 
 ;;; magit -- Git interface
-(use-package magit :ensure t
-  :defer t
+(use-package magit :ensure t :defer t
   :config
   (setq magit-completing-read-function 'ivy-completing-read)
   (setq exec-path (add-to-list 'exec-path "C:/Program Files (x86)/Git/bin")))
+
+;;; .editorconfig support
+(use-package editorconfig :ensure t :defer t
+  :init
+  (add-hook 'prog-mode-hook (editorconfig-mode 1))
+  (add-hook 'text-mode-hook (editorconfig-mode 1)))
 
 ;;; Dockerfile files support
 (use-package dockerfile-mode :ensure t :defer t)
