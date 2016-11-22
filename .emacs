@@ -159,8 +159,9 @@
 (use-package editorconfig :ensure t :defer t
   :diminish "EC"
   :init
-  (add-hook 'prog-mode-hook (editorconfig-mode 1))
-  (add-hook 'text-mode-hook (editorconfig-mode 1)))
+  ;; delay load until a non virtual buffer is opened
+  (add-hook 'prog-mode-hook (lambda() (when buffer-file-name (editorconfig-mode 1))))
+  (add-hook 'text-mode-hook (lambda() (when buffer-file-name (editorconfig-mode 1)))))
 
 ;;; Dockerfile files support
 (use-package dockerfile-mode :ensure t :defer t)
