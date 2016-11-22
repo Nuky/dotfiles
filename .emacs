@@ -85,6 +85,10 @@
 ;; if the script has a first line of "#!" then do chmod a+x
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
+;; clickable URLs
+(add-hook 'text-mode-hook 'goto-address-mode)
+(add-hook 'prog-mode-hook 'goto-address-prog-mode)
+
 ;; show trailing whitespaces (source code only)
 (add-hook 'prog-mode-hook (lambda () (interactive) (setq show-trailing-whitespace 1)))
 
