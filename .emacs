@@ -141,6 +141,10 @@
   (add-to-list 'ivy-re-builders-alist '(swiper . ivy--regex-plus))
   :bind ("C-s" . swiper))
 
+;;; tooltips for currently entered command (prefix)
+(use-package which-key :ensure t
+  :config (which-key-mode))
+
 ;;; magit -- Git interface
 (use-package magit :ensure t :defer t
   :config
