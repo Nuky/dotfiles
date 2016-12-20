@@ -46,8 +46,8 @@
 
 ;;; usual tweaks
 (setq ring-bell-function 'ignore)                    ; NO stupid bell sound
-(scroll-bar-mode -1)                                 ; No scrollbar
-(tool-bar-mode -1)                                   ; No toolbar
+(if (functionp 'scroll-bar-mode)(scroll-bar-mode -1)); No scrollbar
+(if (functionp 'tool-bar-mode)(tool-bar-mode -1))    ; No toolbar
 (menu-bar-mode -1)                                   ; No menubar
 (fset 'yes-or-no-p 'y-or-n-p)                        ; 'y/n' instead of 'yes/no'
 (setq line-number-mode t)                            ; Line number in modeline
@@ -65,7 +65,7 @@
 (setq mouse-yank-at-point t)                         ; Mouse copy on text pointer
 (setq scroll-preserve-screen-position t)             ; Page up/down preserve point on screen
 (mouse-avoidance-mode 'animate)                      ; Move the mouse away when cursor approaches !
-(mouse-wheel-mode t)                                 ; Enable mouse-wheel to scroll
+(if (functionp 'mouse-wheel-mode)(mouse-wheel-mode t)); Enable mouse-wheel to scroll
 (which-function-mode)                                ; Display current function in modeline
 (setq kill-whole-line t)                             ; Cut whole line when point is at col0
 (toggle-uniquify-buffer-names)                       ; Add parent dirs to buffer names when ambiguous
