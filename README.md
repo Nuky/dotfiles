@@ -24,6 +24,8 @@ export TGI=T0106400
 (load "~/dotfiles/.emacs")
 
 ;;; Specific config
+(setq user-full-name "First Last")
+(setq user-mail-address "whatever@example.com")
 
 ;;; Generated stuff below !
 ```
