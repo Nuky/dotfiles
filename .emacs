@@ -68,7 +68,7 @@
 (if (functionp 'mouse-wheel-mode)(mouse-wheel-mode t)); Enable mouse-wheel to scroll
 (which-function-mode)                                ; Display current function in modeline
 (setq kill-whole-line t)                             ; Cut whole line when point is at col0
-(toggle-uniquify-buffer-names)                       ; Add parent dirs to buffer names when ambiguous
+(setq uniquify-buffer-name-style 'forward)           ; Add parent dirs to buffer names when ambiguous
 (set-default 'indicate-empty-lines t)                ; Mark end of file lines in fringe
 (set-default 'indicate-buffer-boundaries 'left)      ; Mark buffer boundaries in fringe
 (setq make-backup-files nil)                         ; Do not create backup~ files
