@@ -1,3 +1,4 @@
+#!/bin/bash
 # To install, symlink or add the following to ~/.bashrc:
 # source ~/dotfiles/.bashrc
 

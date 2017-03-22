@@ -1,6 +1,6 @@
 # Dotfiles
 
-Some of my dotfiles used on Arch, Ubuntu and mingw (from git for windows).
+Some of my dotfiles used on Archlinux, Ubuntu, mingw and WSL on windows.
 
 # Installation
 
@@ -13,7 +13,7 @@ Nothing fancy, simply include from root dotfiles or directly symlink.
 source ~/dotfiles/.bashrc
 
 # specific config
-alias emacs="/c/Program\ Files\ \(x86\)/emacs-24.4/bin/emacs.exe"
+export TGI=T0106400
 ```
 
 ## emacs
