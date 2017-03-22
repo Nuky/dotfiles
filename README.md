@@ -40,3 +40,11 @@ export TGI=T0106400
         email = yourmail@example.com
         name = Your Name
 ```
+
+## vim
+
+``` vim
+" include generic config
+include ~/dotfiles/.vimrc
+" specific config
+```
