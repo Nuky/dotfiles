@@ -137,7 +137,10 @@
          ("C-x C-f" . counsel-find-file)
          ("C-h f" . counsel-describe-function)
          ("C-h v" . counsel-describe-variable)
-         ("M-§" . counsel-imenu)))
+         ("C-c g" . counsel-git)
+         ("C-c j" . counsel-git-grep)
+         ("M-§" . counsel-imenu)
+         ("M-y" . counsel-yank-pop)))
 
 ;; incremental search powered by ivy
 (use-package swiper :ensure t
