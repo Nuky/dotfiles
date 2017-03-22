@@ -7,7 +7,7 @@
 
 # proper defaults
 alias df='df -hT'
-alias du="du -h"
+alias du='du -h'
 alias ls='ls --color=auto -h'
 alias mkdir='mkdir -p -v'
 # useful aliases
@@ -108,6 +108,9 @@ if command -v man >/dev/null 2>&1; then
         man "$@"
     }
 fi
+
+# pip that allows installs outside of a venv (see pip.conf)
+command -v pip >/dev/null 2>&1 && alias gpip='PIP_REQUIRE_VIRTUALENV="" pip'
 
 # Utilities for managing the proxy at Thales
 

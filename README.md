@@ -43,6 +43,14 @@ export TGI=T0106400
         name = Your Name
 ```
 
+## pip
+
+``` sh
+ln -s ~/dotfiles/config/pip/pip.conf ~/.config/pip/pip.conf
+```
+
+On windows, copy to `%APPDATA%\pip\pip.ini`
+
 ## vim
 
 ``` vim
