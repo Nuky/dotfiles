@@ -153,6 +153,10 @@
 (use-package which-key :ensure t
   :config (which-key-mode))
 
+;;; expand region semantically around cursor
+(use-package expand-region :ensure t
+  :bind ("C-=" . er/expand-region))
+
 ;;; magit -- Git interface
 (use-package magit :ensure t :defer t
   :config
