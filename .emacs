@@ -146,7 +146,8 @@
 (use-package swiper :ensure t
   :config
   (add-to-list 'ivy-re-builders-alist '(swiper . ivy--regex-plus))
-  :bind ("C-s" . swiper))
+  :bind (("C-s" . swiper)
+         ("C-r" . swiper)))
 
 ;;; tooltips for currently entered command (prefix)
 (use-package which-key :ensure t
