@@ -55,6 +55,6 @@ On windows, copy to `%APPDATA%\pip\pip.ini`
 
 ``` vim
 " include generic config
-include ~/dotfiles/.vimrc
+source ~/dotfiles/.vimrc
 " specific config
 ```
