@@ -112,6 +112,9 @@ fi
 # pip that allows installs outside of a venv (see pip.conf)
 command -v pip >/dev/null 2>&1 && alias gpip='PIP_REQUIRE_VIRTUALENV="" pip'
 
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
 # Utilities for managing the proxy at Thales
 
 # Set environment proxy variables
