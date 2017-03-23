@@ -62,11 +62,18 @@ elif [[ -f /etc/bash_completion.d/git-prompt ]]; then
     source /etc/bash_completion.d/git-prompt
 fi
 if command -v __git_ps1 >/dev/null 2>&1; then
-    LIGHT_GREEN="\[\033[1;32m\]"
-    LIGHT_GRAY="\[\033[0;37m\]"
-    COLOR_NONE="\[\e[0m\]"
-    export PROMPT_COMMAND='__git_ps1 "${VIRTUAL_ENV:+[`basename $VIRTUAL_ENV`] }${LIGHT_GRAY}\u${COLOR_NONE} ${LIGHT_GREEN}\w${COLOR_NONE}" " ${COLOR_NONE}\\\$${COLOR_NONE} "'
-    #PS1='[\u@\h \W]\$ '
+    __my_prompt_command() {
+        local EXIT="$?"
+        local GREEN="\[\e[1;32m\]"
+        local LGRAY="\[\e[0;37m\]"
+        local LRED="\[\e[0;91m\]"
+        local NONE="\[\e[0m\]"
+        local ps1_pre="${VIRTUAL_ENV:+[`basename $VIRTUAL_ENV`] }${LGRAY}\u${NONE} ${GREEN}\w${NONE}"
+        local ps1_post=" ${NONE}\\\$${NONE} "
+        [ "${EXIT}" != 0 ] && ps1_post=" ${LRED}${EXIT}${NONE}${ps1_post}"
+        __git_ps1 "${ps1_pre}" "${ps1_post}"
+    }
+    export PROMPT_COMMAND=__my_prompt_command
 fi
 
 # In addition, if you set GIT_PS1_SHOWDIRTYSTATE to a nonempty
