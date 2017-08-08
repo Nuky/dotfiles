@@ -234,6 +234,11 @@
   (setq thrift-indent-level 4)
   :mode ("\\.thrift$" . thrift-mode))
 
+;;; .scala files support
+(use-package scala-mode :ensure t :defer t
+  :interpreter
+  ("scala" . scala-mode))
+
 ;;; .lua files support
 (use-package lua-mode :ensure t :defer t)
 
