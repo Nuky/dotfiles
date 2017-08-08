@@ -51,6 +51,12 @@ ln -s ~/dotfiles/config/pip/pip.conf ~/.config/pip/pip.conf
 
 On windows, copy to `%APPDATA%\pip\pip.ini`
 
+## tmux
+
+``` sh
+ln -s ~/dotfiles/.tmux.conf ~/.tmux.conf
+```
+
 ## vim
 
 ``` vim
