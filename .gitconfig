@@ -17,6 +17,7 @@
 	pr = pull --rebase --stat
 	diffc = diff --cached
 	fa = fetch --all
+	fap = fetch --all --prune
 	up = !sh -c 'git pull --rebase --prune && git log --pretty=format:\"%Cred%ae %Creset- %C(yellow)%s %Creset(%ar)\" HEAD@{1}..'
 	top = rev-parse --show-toplevel
 	ri = rebase --interactive
