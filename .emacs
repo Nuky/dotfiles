@@ -228,6 +228,12 @@
 ;;; .json files support
 (use-package json-mode :ensure t :defer t)
 
+;;; .thrift files support
+(use-package thrift :ensure t :defer t
+  :config
+  (setq thrift-indent-level 4)
+  :mode ("\\.thrift$" . thrift-mode))
+
 ;;; .lua files support
 (use-package lua-mode :ensure t :defer t)
 
