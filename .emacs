@@ -224,9 +224,8 @@
   :commands elpy-enable
   :init (with-eval-after-load 'python (elpy-enable))
   :config
+  ;; use jedi backend rather than rope
   (use-package jedi :ensure t)
-  (use-package company-quickhelp :ensure t)
-  (company-quickhelp-mode)
   (setq elpy-rpc-backend "jedi")
   ;; use flycheck rather than flymake
   (remove-hook 'elpy-modules 'elpy-module-flymake)
