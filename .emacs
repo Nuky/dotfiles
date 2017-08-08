@@ -221,13 +221,55 @@
   :bind ("M-p" . company-complete-common))
 
 ;;; C/C++ IDE
+;;; - irony with flycheck and company
+;;; - rtags for symbol browsing
+;;; - xcscope for symbol browsing (as backup)
+;; (use-package irony
+;;   :ensure t
+;;   :commands irony-mode
+;;   :init
+;;   (add-hook 'c++-mode-hook 'irony-mode)
+;;   (add-hook 'c-mode-hook 'irony-mode)
+;;   (use-package company-irony :ensure t :defer t)
+;;   (use-package company-irony-c-headers :ensure t :defer t)
+;;   (defun my-irony-mode-hook ()
+;;     (setq company-async-timeout 10)
+;;     (setq company-backends '(company-irony-c-headers company-irony))
+;;     (setq irony-additional-clang-options '("-std=c++14")))
+;;   (add-hook 'irony-mode-hook 'my-irony-mode-hook)
+;;   (use-package flycheck-irony :ensure t :defer t)
+;;   (add-hook 'flycheck-mode-hook #'flycheck-irony-setup)
+;;   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 (use-package cc-mode
   :config
   (defvaralias 'c-basic-offset 'tab-width)
-  ;; tabs for indentation, space for alignment
-  (setq-default indent-tabs-mode t) ; has to be on for smart-tabs
-  (use-package smart-tabs-mode :ensure t)
-  (smart-tabs-insinuate 'c++)
+  (c-set-offset 'innamespace [0])    ; do not indent namespace content
+  ;; (use-package smart-tabs-mode :ensure t) ; better tab indentation using ...
+  ;; (smart-tabs-insinuate 'c++)             ; ... spaces for alignement
+  (use-package modern-cpp-font-lock :ensure t
+    :diminish modern-c++-font-lock-mode
+    :init (add-hook 'c++-mode-hook #'modern-c++-font-lock-mode))
+  (use-package clang-format :ensure t :defer t)
+  (use-package rtags :ensure t
+    :init
+    (rtags-enable-standard-keybindings)	; keybinds are under [C-c r]
+    (setq rtags-autostart-diagnostics t)
+    (setq rtags-completions-enabled t)
+    (setq rtags-imenu-syntax-highlighting 32)
+    (require 'cl)                ; required by company-rtags I think ?
+    (use-package company-rtags :ensure t :defer nil)
+    (push 'company-rtags company-backends)
+    (use-package flycheck-rtags :ensure t))
+  ;(use-package xcscope :ensure t :init (cscope-setup))
+  :bind (:map c++-mode-map
+              ("C-c o" . ff-find-other-file)
+              ("C-c f" . clang-format)
+              ("C-c F" . clang-format-buffer)
+              ("M-." . rtags-find-symbol-at-point)   ; replace find-tag
+              ("M-<" . rtags-location-stack-back)    ; pop back to last location
+              ("M->" . rtags-location-stack-forward) ; undo pop back
+              ("M-{" . rtags-previous-match)         ; go to next/prev match for rtags cmds ...
+              ("M-}" . rtags-next-match))            ; ... that return multiple results
   :mode ("\\.h$" . c++-mode))
 
 ;;; Python IDE
