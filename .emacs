@@ -209,6 +209,17 @@
   :init
   (global-flycheck-mode))
 
+;;; Company completion menu for everything
+(use-package company :ensure t
+  :diminish ""
+  :init
+  (global-company-mode t)
+  :config
+  (when (display-graphic-p)
+    (use-package company-quickhelp :ensure t)
+    (company-quickhelp-mode 1))
+  :bind ("M-p" . company-complete-common))
+
 ;;; C/C++ IDE
 (use-package cc-mode
   :config
