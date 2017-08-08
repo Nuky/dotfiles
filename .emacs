@@ -165,6 +165,7 @@
 
 ;;; tooltips for currently entered command (prefix)
 (use-package which-key :ensure t
+  :diminish ""
   :config (which-key-mode))
 
 ;;; expand region semantically around cursor
@@ -179,7 +180,7 @@
 
 ;;; .editorconfig support
 (use-package editorconfig :ensure t :defer t
-  :diminish "EC"
+  :diminish ""
   :init
   ;; delay loaded until we visit a non virtual buffer
   (add-hook 'prog-mode-hook (lambda () (when buffer-file-name (editorconfig-mode 1))))
