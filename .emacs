@@ -78,8 +78,9 @@
 (setq delete-auto-save-files t)                      ; Delete #autosave# files on save
 ;;(global-auto-revert-mode t)                        ; Auto reload files when modified
 ;;(dynamic-completion-mode t)
-(setq-default indent-tabs-mode nil)                  ; Indent with spaces by default
+(setq compilation-scroll-output 'first-error)        ; Compile output auto-scroll up to an error
 (setq-default tab-width 4)                           ; Tabs are 4 chars wide
+(setq-default indent-tabs-mode nil)                  ; Use spaces for indentation
 
 ;; Show the current function name in the header line
 (which-function-mode)
