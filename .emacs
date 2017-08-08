@@ -187,6 +187,9 @@
   (add-hook 'prog-mode-hook (lambda () (when buffer-file-name (editorconfig-mode 1))))
   (add-hook 'text-mode-hook (lambda () (when buffer-file-name (editorconfig-mode 1)))))
 
+;;; Jenkinsfile files support
+(use-package groovy-mode :ensure t :defer t)
+
 ;;; Dockerfile files support
 (use-package dockerfile-mode :ensure t :defer t)
 
