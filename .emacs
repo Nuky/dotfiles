@@ -204,6 +204,11 @@
 ;;; Markdown files support
 (use-package markdown-mode :ensure t :defer t)
 
+;;; Flycheck everything
+(use-package flycheck :ensure t
+  :init
+  (global-flycheck-mode))
+
 ;;; C/C++ IDE
 (use-package cc-mode
   :config
@@ -222,11 +227,14 @@
   (use-package jedi :ensure t)
   (use-package company-quickhelp :ensure t)
   (company-quickhelp-mode)
-  (define-key elpy-mode-map (kbd "M-<up>") nil)    ; do not...
-  (define-key elpy-mode-map (kbd "M-<down>") nil)  ; ...overwrite...
-  (define-key elpy-mode-map (kbd "M-<left>") nil)  ; ...windmove...
-  (define-key elpy-mode-map (kbd "M-<right>") nil) ; ...keybinds !
-  (setq elpy-rpc-backend "jedi"))
+  (setq elpy-rpc-backend "jedi")
+  ;; use flycheck rather than flymake
+  (remove-hook 'elpy-modules 'elpy-module-flymake)
+  ;; restore windmove keybinds
+  (define-key elpy-mode-map (kbd "M-<up>") nil)
+  (define-key elpy-mode-map (kbd "M-<down>") nil)
+  (define-key elpy-mode-map (kbd "M-<left>") nil)
+  (define-key elpy-mode-map (kbd "M-<right>") nil))
 
 ;;; .json files support
 (use-package json-mode :ensure t :defer t)
