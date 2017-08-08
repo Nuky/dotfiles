@@ -242,6 +242,9 @@
 
 ;;; tweaks when console
 (unless (display-graphic-p)
+  (xterm-mouse-mode)                                 ; enable xterm mouse support
+  (global-set-key [mouse-4] 'scroll-down-line)       ; mouse wheel scrolls
+  (global-set-key [mouse-5] 'scroll-up-line)         ; mouse wheel scrolls
   ;(set-face-foreground 'font-lock-comment-face "red")  ; Better colors ...
   ;(set-face-foreground 'font-lock-string-face "green") ; ... for the terminal
   (normal-erase-is-backspace-mode -1)                  ; Fix delete key
