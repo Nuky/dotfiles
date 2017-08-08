@@ -176,7 +176,8 @@
 (use-package magit :ensure t :defer t
   :config
   (setq magit-completing-read-function 'ivy-completing-read)
-  (setq exec-path (add-to-list 'exec-path "C:/Program Files (x86)/Git/bin")))
+  (setq exec-path (add-to-list 'exec-path "C:/Program Files (x86)/Git/bin"))
+  :bind ("C-x g" . magit-status))
 
 ;;; .editorconfig support
 (use-package editorconfig :ensure t :defer t
