@@ -69,7 +69,6 @@
 (setq scroll-preserve-screen-position t)             ; Page up/down preserve point on screen
 (mouse-avoidance-mode 'animate)                      ; Move the mouse away when cursor approaches !
 (if (functionp 'mouse-wheel-mode)(mouse-wheel-mode t)); Enable mouse-wheel to scroll
-(which-function-mode)                                ; Display current function in modeline
 (setq kill-whole-line t)                             ; Cut whole line when point is at col0
 (setq uniquify-buffer-name-style 'forward)           ; Add parent dirs to buffer names when ambiguous
 (set-default 'indicate-empty-lines t)                ; Mark end of file lines in fringe
@@ -81,6 +80,15 @@
 ;;(dynamic-completion-mode t)
 (setq-default indent-tabs-mode nil)                  ; Indent with spaces by default
 (setq-default tab-width 4)                           ; Tabs are 4 chars wide
+
+;; Show the current function name in the header line
+(which-function-mode)
+(set-face-foreground 'which-func "#88AAFF")
+(setq-default header-line-format '((which-func-mode ("" which-func-format " "))))
+(setq mode-line-misc-info
+      ;; We remove Which Function Mode from the mode line, because it's mostly
+      ;; invisible here anyway.
+      (assq-delete-all 'which-func-mode mode-line-misc-info))
 
 ;; forbid moving point into read-only part of the prompt
 (plist-put minibuffer-prompt-properties 'point-entered 'minibuffer-avoid-prompt)
