@@ -22,9 +22,12 @@
               (replace-regexp-in-string "\n" "" (emacs-version))
               (abbreviate-file-name (or load-file-name buffer-file-name))))
 (when (> (display-color-cells) 16)
-  (load-theme 'wombat)                          ; cool dark builtin theme
+  (load-theme 'wombat t)                        ; cool dark builtin theme
   (set-face-underline 'highlight nil)           ; fix wombat theme with hl-line
   (set-face-foreground 'highlight nil)          ; fix wombat theme with hl-line
+  (set-face-background 'default "#090909")      ; really dark for better contrast
+  (set-face-background 'highlight "#1A1A1A")    ; darker highlight, more subtle
+  (set-face-foreground 'font-lock-comment-face "orangered") ; redish comments
   (set-face-background 'mode-line "firebrick")) ; make active buffer more visible
 
 ;; setup package repos for M-x package-*
@@ -226,8 +229,8 @@
 
 ;;; tweaks when console
 (unless (display-graphic-p)
-  (set-face-foreground 'font-lock-comment-face "red")  ; Better colors ...
-  (set-face-foreground 'font-lock-string-face "green") ; ... for the terminal
+  ;(set-face-foreground 'font-lock-comment-face "red")  ; Better colors ...
+  ;(set-face-foreground 'font-lock-string-face "green") ; ... for the terminal
   (normal-erase-is-backspace-mode -1)                  ; Fix delete key
   ;; fix keymaps
   (define-key function-key-map "\e[1;5H" [C-home])
