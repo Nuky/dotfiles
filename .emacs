@@ -14,6 +14,9 @@
 ;; set garbage collector threshold to 10MB, considerably speeding up emacs
 (setq gc-cons-threshold (* 10 1024 1024))
 
+;; disable running regexes on filenames when loading .el files, speeding up emacs
+(setq-local file-name-handler-alist nil)
+
 ;; setup a cozy welcome screen
 (setq inhibit-startup-message t)        ; No startup message in minibuffer
 (setq initial-scratch-message
