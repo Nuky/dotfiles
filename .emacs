@@ -33,7 +33,7 @@
 ;; setup package repos for M-x package-*
 (require 'package)
 (package-initialize)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 ;;(package-install-selected-packages)
 
 ;;; Bootstrap use-package
