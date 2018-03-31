@@ -1,5 +1,7 @@
-;; -*- emacs-lisp -*-
-;;
+;;; initfile --- Summary -*- mode: emacs-lisp; lexical-binding: t; -*-
+
+;;; Commentary:
+
 ;; Works on Emacs 25.1.1
 ;; Uses builtin package.el and use-package.
 ;;
@@ -9,7 +11,9 @@
 ;; ;;(package-initialize)
 ;; (load "~/dotfiles/.emacs")
 
-(setq my-init-file-start-time (current-time))
+;;; Code:
+
+(defvar my-init-file-start-time (current-time))
 
 ;; set garbage collector threshold to 10MB, considerably speeding up emacs
 (setq gc-cons-threshold (* 10 1024 1024))
@@ -355,14 +359,14 @@
 
 ;; [C-$] Toggle hiding indented lines based on point position
 (defun selective-display-on-column-at-point ()
-  "Activate selective display based on the column at point"
+  "Activate selective display based on the column at point."
   (interactive)
   (set-selective-display (if selective-display nil (+ 1 (current-column)))))
 (global-set-key [(control $)] 'selective-display-on-column-at-point)
 
 ;; [C-c "] [C-c <].. Wrap selection/word with paired chars
 (defun wrap-selection-or-word-with-chars-around (firstchar &optional secondchar)
-  "Inserts chars around selected text or current word"
+  "Insert FIRSTCHAR (and SECONDCHAR) around selected text or current word."
   (interactive)
   (if (and transient-mark-mode mark-active)
       (let ((e1 (region-beginning)) (e2 (region-end)))
@@ -382,6 +386,10 @@
 
 ;;; Replace GNU advertising
 (defun display-startup-echo-area-message ()
+  "Display time since startup."
   (message "All done in %.02fs, %s%s"
            (float-time (time-since my-init-file-start-time))
            (user-login-name) ". \\o/"))
+
+(provide '.emacs)
+;;; .emacs ends here
