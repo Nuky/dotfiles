@@ -309,6 +309,9 @@
   (setq thrift-indent-level 4)
   :mode ("\\.thrift$" . thrift-mode))
 
+;;; .feature files support
+(use-package feature-mode :ensure t :defer t)
+
 ;;; .scala files support
 (use-package scala-mode :ensure t :defer t
   :interpreter
