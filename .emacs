@@ -161,6 +161,7 @@
          ("C-x C-f" . counsel-find-file)
          ("C-h f" . counsel-describe-function)
          ("C-h v" . counsel-describe-variable)
+         ("C-h S" . counsel-info-lookup-symbol)
          ("C-c g" . counsel-git)
          ("C-c j" . counsel-git-grep)
          ("C-c J" . counsel-rg)
@@ -330,9 +331,7 @@
   (xterm-mouse-mode)                                 ; enable xterm mouse support
   (global-set-key [mouse-4] 'scroll-down-line)       ; mouse wheel scrolls
   (global-set-key [mouse-5] 'scroll-up-line)         ; mouse wheel scrolls
-  ;(set-face-foreground 'font-lock-comment-face "red")  ; Better colors ...
-  ;(set-face-foreground 'font-lock-string-face "green") ; ... for the terminal
-  (normal-erase-is-backspace-mode -1)                  ; Fix delete key
+  (normal-erase-is-backspace-mode -1)                ; Fix delete key
   ;; fix keymaps
   (define-key function-key-map "\e[1;5H" [C-home])
   (define-key function-key-map "\e[1;5F" [C-end])
