@@ -51,7 +51,8 @@
 
 (eval-when-compile
   (require 'use-package))
-(require 'diminish)
+(unless (package-installed-p 'diminish)
+  (package-install 'diminish))
 (require 'bind-key)
 
 ;;; usual tweaks
