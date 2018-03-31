@@ -303,6 +303,9 @@
 ;;; .json files support
 (use-package json-mode :ensure t :defer t)
 
+;;; .proto files support
+(use-package protobuf-mode :ensure t :defer t)
+
 ;;; .thrift files support
 (use-package thrift :ensure t :defer t
   :config
