@@ -6,16 +6,22 @@
 [[ $- != *i* ]] && return
 
 # proper defaults
-alias df='df -hT'
+alias df='df -h'
 alias du='du -h'
-alias ls='ls --color=auto -h'
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    alias ls='ls -Gh'
+else
+    alias ls='ls --color=auto -h'
+fi
 alias mkdir='mkdir -p -v'
 # useful aliases
 alias e='emacs -nw'
 alias la='ll -a'
 alias ll='ls -l'
 alias lld='ll -d */'
-eval $(dircolors -b) # colors for lsd -(*,*)_
+if command -v dircolors >/dev/null 2>&1; then
+    eval $(dircolors -b) # colors for lsd -(*,*)_
+fi
 alias lsd='ls -d */'
 if [[ "$OSTYPE" == "msys" ]]; then
     alias open='start'
@@ -31,11 +37,20 @@ alias lk='l'
 # workarounds
 alias sudo="sudo " # enable alias expansion of sudoified command
 
+# enable loads of completions (bash-completion)
+if [[ -f /usr/share/bash-completion/bash_completion ]]; then
+    source /usr/share/bash-completion/bash_completion
+elif [[ -f /usr/local/etc/bash_completion ]]; then
+    source /usr/local/etc/bash_completion
+fi
+
 # g == git
 if [[ -f /usr/share/git/completion/git-completion.bash ]]; then
     source /usr/share/git/completion/git-completion.bash
 elif [[ -f /usr/share/bash-completion/completions/git ]]; then
     source /usr/share/bash-completion/completions/git
+elif [[ -f /usr/local/etc/bash_completion.d/git-completion.bash ]]; then
+    source /usr/local/etc/bash_completion.d/git-completion.bash
 fi
 alias gitk='gitk --all'
 alias g='git' && __git_complete g __git_main
@@ -44,6 +59,9 @@ alias qg='git' && __git_complete qg __git_main # typo..
 # key bindings
 if [[ "$OSTYPE" == "msys" ]]; then
     bind '"\C-_":backward-kill-word'  # ctrl-backspace kills chars backward (Ctrl-w)
+    bind '"\e[1;5D":backward-word'    # ctrl-left to move to previous word
+    bind '"\e[1;5C":forward-word'     # ctrl-right to move to next word
+elif [[ "$OSTYPE" == "darwin"* ]]; then
     bind '"\e[1;5D":backward-word'    # ctrl-left to move to previous word
     bind '"\e[1;5C":forward-word'     # ctrl-right to move to next word
 else
@@ -60,6 +78,8 @@ if [[ -f /usr/share/git/completion/git-prompt.sh ]]; then
     source /usr/share/git/completion/git-prompt.sh
 elif [[ -f /etc/bash_completion.d/git-prompt ]]; then
     source /etc/bash_completion.d/git-prompt
+elif [[ -f /usr/local/etc/bash_completion.d/git-prompt.sh ]]; then
+    source /usr/local/etc/bash_completion.d/git-prompt.sh
 fi
 if command -v __git_ps1 >/dev/null 2>&1; then
     __my_prompt_command() {
@@ -90,6 +110,11 @@ if [[ "$OSTYPE" != "msys" ]]; then
 fi
 export GIT_PS1_SHOWCOLORHINTS=1
 
+# Modify the prompt further for iTerm2 integration (do not fiddle with prompt after this!)
+if [[ -f "${HOME}/.iterm2_shell_integration.bash" ]]; then
+    source "${HOME}/.iterm2_shell_integration.bash"
+fi
+
 # don't clutter history too much
 export HISTCONTROL=ignoreboth
 export HISTIGNORE='history*'
@@ -100,7 +125,7 @@ export HISTFILESIZE=2000
 export EDITOR=vim
 shopt -s histappend             # do not overwrite history file
 shopt -s checkwinsize           # adjust to terminal window size
-shopt -s globstar               # enable ** recursive wildcard
+shopt -s globstar 2&>/dev/null  # enable ** recursive wildcard (bash >4.0)
 
 # Colored man pages
 if command -v man >/dev/null 2>&1; then
