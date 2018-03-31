@@ -89,6 +89,7 @@
 (setq-default enable-remote-dir-locals t)            ; Tramp handles dir-local files
 (setq-default tab-width 4)                           ; Tabs are 4 chars wide
 (setq-default indent-tabs-mode nil)                  ; Use spaces for indentation
+(setq auto-window-vscroll nil)                       ; Workaround performance issues with next-line
 
 ;; Show the current function name in the header line
 (which-function-mode)
