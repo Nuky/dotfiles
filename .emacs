@@ -352,7 +352,6 @@
   (global-unset-key "\C-z"))                           ; only keep C-x z to suspend-frame
 
 ;;; custom keyboard binds
-(global-set-key [(control a)] 'mark-whole-buffer)        ; Select whole buffer
 (global-set-key "\C-cu" 'uncomment-region)               ; Uncomment selected region
 (global-set-key "\C-cc" 'comment-region)                 ; Comment selected region
 (global-set-key "\C-c\C-c" 'comment-or-uncomment-region) ; Toggle comment selected region
