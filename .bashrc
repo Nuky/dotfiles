@@ -25,6 +25,8 @@ fi
 alias lsd='ls -d */'
 if [[ "$OSTYPE" == "msys" ]]; then
     alias open='start'
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    :
 elif (( EUID )); then
     alias open='xdg-open'
 fi
