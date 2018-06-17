@@ -281,8 +281,7 @@
               ("M-<" . rtags-location-stack-back)    ; pop back to last location
               ("M->" . rtags-location-stack-forward) ; undo pop back
               ("M-{" . rtags-previous-match)         ; go to next/prev match for rtags cmds ...
-              ("M-}" . rtags-next-match))            ; ... that return multiple results
-  :mode ("\\.h$" . c++-mode))
+              ("M-}" . rtags-next-match)))           ; ... that return multiple results
 
 ;;; Python IDE
 (use-package elpy
