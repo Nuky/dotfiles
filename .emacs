@@ -299,6 +299,9 @@
   (define-key elpy-mode-map (kbd "M-<left>") nil)
   (define-key elpy-mode-map (kbd "M-<right>") nil))
 
+;;; .tf files support
+(use-package terraform-mode :ensure t :defer t)
+
 ;;; .json files support
 (use-package json-mode :ensure t :defer t)
 
