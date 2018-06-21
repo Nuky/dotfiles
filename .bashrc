@@ -144,7 +144,8 @@ if command -v man >/dev/null 2>&1; then
 fi
 
 # pip that allows installs outside of a venv (see pip.conf)
-command -v pip >/dev/null 2>&1 && alias gpip='PIP_REQUIRE_VIRTUALENV="" pip'
+command -v pip >/dev/null 2>&1 && alias gpip='PIP_REQUIRE_VIRTUALENV=false pip'
+command -v pip3 >/dev/null 2>&1 && alias gpip3='PIP_REQUIRE_VIRTUALENV=false pip3'
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
