@@ -145,6 +145,7 @@ fi
 
 # pip that allows installs outside of a venv (see pip.conf)
 command -v pip >/dev/null 2>&1 && alias gpip='PIP_REQUIRE_VIRTUALENV=false pip'
+command -v pip2 >/dev/null 2>&1 && alias gpip2='PIP_REQUIRE_VIRTUALENV=false pip2'
 command -v pip3 >/dev/null 2>&1 && alias gpip3='PIP_REQUIRE_VIRTUALENV=false pip3'
 
 # make less more friendly for non-text input files, see lesspipe(1)
