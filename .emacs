@@ -55,6 +55,11 @@
   (package-install 'diminish))
 (require 'bind-key)
 
+;;; fix exec-path when windowed (this is slow!)
+(use-package exec-path-from-shell :ensure t
+  :if (memq window-system '(mac ns x))
+  :config (exec-path-from-shell-initialize))
+
 ;;; usual tweaks
 (setq ring-bell-function 'ignore)                    ; NO stupid bell sound
 (if (functionp 'scroll-bar-mode)(scroll-bar-mode -1)); No scrollbar
