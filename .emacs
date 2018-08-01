@@ -158,7 +158,18 @@
   :bind (([remap switch-to-buffer] . ivy-switch-buffer)
          ([remap switch-to-buffer-other-window] . ivy-switch-buffer-other-window)))
 
-;; even better completion for some functions
+;; better switch-buffer powered by ivy
+(use-package ivy-rich :ensure t
+  :after ivy
+  :custom
+  (ivy-virtual-abbreviate 'full
+                          ivy-rich-switch-buffer-align-virtual-buffer t
+                          ivy-rich-path-style 'abbrev)
+  :config
+  (ivy-set-display-transformer 'ivy-switch-buffer
+                               'ivy-rich-switch-buffer-transformer))
+
+;; even better completion for some functions powered by ivy
 (use-package counsel :ensure t
   :config
   (use-package smex :ensure t)       ; automatically used for counsel-M-x
