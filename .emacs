@@ -55,6 +55,8 @@
   (package-install 'diminish))
 (require 'bind-key)
 
+(setq use-package-compute-statistics t) ; view the statistical report using `use-package-report'
+
 ;;; fix exec-path when windowed (this is slow!)
 (use-package exec-path-from-shell :ensure t
   :if (memq window-system '(mac ns x))
