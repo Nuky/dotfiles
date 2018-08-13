@@ -23,9 +23,9 @@
 
 ;; setup a cozy welcome screen
 (setq inhibit-startup-message t)        ; No startup message in minibuffer
+(setq initial-major-mode 'fundamental-mode)
 (setq initial-scratch-message
-      (format (concat ";; Hi there, this is %s\n"
-                      ";; you might want to visit me %s\n")
+      (format "%s\nconfig: %s"
               (replace-regexp-in-string "\n" "" (emacs-version))
               (abbreviate-file-name (or load-file-name buffer-file-name))))
 (when (> (display-color-cells) 16)
