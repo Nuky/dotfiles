@@ -162,14 +162,13 @@
 
 ;; better switch-buffer powered by ivy
 (use-package ivy-rich :ensure t
-  :after ivy
+  :after (:all ivy counsel)
   :custom
   (ivy-virtual-abbreviate 'full
                           ivy-rich-switch-buffer-align-virtual-buffer t
                           ivy-rich-path-style 'abbrev)
   :config
-  (ivy-set-display-transformer 'ivy-switch-buffer
-                               'ivy-rich-switch-buffer-transformer))
+  (ivy-rich-mode 1))
 
 ;; even better completion for some functions powered by ivy
 (use-package counsel :ensure t
