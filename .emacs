@@ -393,26 +393,6 @@
   (set-selective-display (if selective-display nil (+ 1 (current-column)))))
 (global-set-key [(control $)] 'selective-display-on-column-at-point)
 
-;; [C-c "] [C-c <].. Wrap selection/word with paired chars
-(defun wrap-selection-or-word-with-chars-around (firstchar &optional secondchar)
-  "Insert FIRSTCHAR (and SECONDCHAR) around selected text or current word."
-  (interactive)
-  (if (and transient-mark-mode mark-active)
-      (let ((e1 (region-beginning)) (e2 (region-end)))
-        (kill-region e1 e2)
-        (insert firstchar)
-        (yank)
-        (insert (or secondchar firstchar)))
-    (let ((thing (thing-at-point 'word))
-          (bounds (bounds-of-thing-at-point 'word)))
-      (delete-region (car bounds) (cdr bounds))
-      (insert firstchar thing (or secondchar firstchar)))))
-(global-set-key "\C-c\"" '(lambda () (interactive)(wrap-selection-or-word-with-chars-around "\"")))
-(global-set-key "\C-c\'" '(lambda () (interactive)(wrap-selection-or-word-with-chars-around "\'")))
-(global-set-key "\C-c<"  '(lambda () (interactive)(wrap-selection-or-word-with-chars-around "<" ">")))
-(global-set-key "\C-c\(" '(lambda () (interactive)(wrap-selection-or-word-with-chars-around "(" ")")))
-(global-set-key "\C-c\[" '(lambda () (interactive)(wrap-selection-or-word-with-chars-around "[" "]")))
-
 ;;; Replace GNU advertising
 (defun display-startup-echo-area-message ()
   "Display time since startup."
