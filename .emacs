@@ -290,7 +290,9 @@
     (push 'company-rtags company-backends)
     (use-package flycheck-rtags :ensure t))
   ;(use-package xcscope :ensure t :init (cscope-setup))
-  :bind (:map c++-mode-map
+  :bind (:map c-mode-map
+              ("C-c o" . ff-find-other-file)
+         :map c++-mode-map
               ("C-c o" . ff-find-other-file)
               ("C-c f" . clang-format)
               ("C-c F" . clang-format-buffer)
