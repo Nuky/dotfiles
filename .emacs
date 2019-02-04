@@ -269,7 +269,10 @@
 (use-package cc-mode
   :config
   (defvaralias 'c-basic-offset 'tab-width)
+  (add-to-list 'c-default-style '(c-mode . "bsd")) ; better default style
+  (add-to-list 'c-default-style '(c++-mode . "bsd")) ; better default style
   (c-set-offset 'innamespace [0])    ; do not indent namespace content
+  (c-set-offset 'inextern-lang [0])  ; do not indent extern "C" content
   ;; (use-package smart-tabs-mode :ensure t) ; better tab indentation using ...
   ;; (smart-tabs-insinuate 'c++)             ; ... spaces for alignement
   (use-package modern-cpp-font-lock :ensure t
