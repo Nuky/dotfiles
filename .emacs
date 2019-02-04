@@ -101,14 +101,11 @@
 (setq x-stretch-cursor t)                            ; Draw cursor as wide as the glyph under point
 (setq auto-window-vscroll nil)                       ; Workaround performance issues with next-line
 
-;; Show the current function name in the header line
+;; Show the current function name in the header line instead of the modeline
 (which-function-mode)
 (set-face-foreground 'which-func "#88AAFF")
 (setq-default header-line-format '((which-func-mode ("" which-func-format " "))))
-(setq mode-line-misc-info
-      ;; We remove Which Function Mode from the mode line, because it's mostly
-      ;; invisible here anyway.
-      (assq-delete-all 'which-func-mode mode-line-misc-info))
+(setq mode-line-misc-info (assq-delete-all 'which-function-mode mode-line-misc-info))
 
 ;; forbid moving point into read-only part of the prompt
 (plist-put minibuffer-prompt-properties 'point-entered 'minibuffer-avoid-prompt)
