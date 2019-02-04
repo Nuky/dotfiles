@@ -379,9 +379,6 @@
   (global-unset-key "\C-z"))                           ; only keep C-x z to suspend-frame
 
 ;;; custom keyboard binds
-(global-set-key "\C-cu" 'uncomment-region)               ; Uncomment selected region
-(global-set-key "\C-cc" 'comment-region)                 ; Comment selected region
-(global-set-key "\C-c\C-c" 'comment-or-uncomment-region) ; Toggle comment selected region
 (global-set-key [mouse-3] 'imenu)                        ; Right-click list of functions
 (global-set-key [C-M-up] 'scroll-down-line)              ; Scroll line by line...
 (global-set-key [C-M-down] 'scroll-up-line)              ; ...leaving point in place
