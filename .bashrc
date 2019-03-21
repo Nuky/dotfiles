@@ -90,7 +90,7 @@ if command -v __git_ps1 >/dev/null 2>&1; then
         local LGRAY="\[\e[0;37m\]"
         local LRED="\[\e[0;91m\]"
         local NONE="\[\e[0m\]"
-        local ps1_pre="${VIRTUAL_ENV:+[`basename $VIRTUAL_ENV`] }${LGRAY}\u@\h${NONE} ${GREEN}\w${NONE}"
+        local ps1_pre="${VIRTUAL_ENV:+[`basename ${VIRTUAL_ENV/%\/?(.)venv/}`] }${LGRAY}\u@\h${NONE} ${GREEN}\w${NONE}"
         local ps1_post=" ${NONE}\\\$${NONE} "
         [ "${EXIT}" != 0 ] && ps1_post=" ${LRED}${EXIT}${NONE}${ps1_post}"
         __git_ps1 "${ps1_pre}" "${ps1_post}"
@@ -127,6 +127,7 @@ export HISTFILESIZE=2000
 export EDITOR=vim
 shopt -s histappend             # do not overwrite history file
 shopt -s checkwinsize           # adjust to terminal window size
+shopt -s extglob                # extended pattern matching operators using parens
 shopt -s globstar 2&>/dev/null  # enable ** recursive wildcard (bash >4.0)
 
 # Colored man pages
