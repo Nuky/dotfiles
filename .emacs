@@ -311,16 +311,17 @@
   :commands elpy-enable
   :init (with-eval-after-load 'python (elpy-enable))
   :config
-  ;; use jedi backend rather than rope
+  ;; enable completion using jedi backend
   (use-package jedi :ensure t)
-  (setq elpy-rpc-backend "jedi")
   ;; use flycheck rather than flymake
   (remove-hook 'elpy-modules 'elpy-module-flymake)
-  ;; restore windmove keybinds
-  (define-key elpy-mode-map (kbd "M-<up>") nil)
-  (define-key elpy-mode-map (kbd "M-<down>") nil)
-  (define-key elpy-mode-map (kbd "M-<left>") nil)
-  (define-key elpy-mode-map (kbd "M-<right>") nil))
+  :bind (:map elpy-mode-map
+              ("C-c f" . elpy-format-code)
+              ;; restore windmove keybinds
+              ("M-<up>" . nil)
+              ("M-<down>" . nil)
+              ("M-<left>" . nil)
+              ("M-<right>" . nil)))
 
 ;;; .tf files support
 (use-package terraform-mode :ensure t :defer t)
