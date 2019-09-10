@@ -58,6 +58,11 @@ alias gitk='gitk --all'
 alias g='git' && __git_complete g __git_main
 alias qg='git' && __git_complete qg __git_main # typo..
 
+# dc == docker-compose
+if command -v docker-compose >/dev/null 2>&1; then
+    alias dc='docker-compose' && complete -F _docker_compose dc
+fi
+
 # key bindings
 if [[ "$OSTYPE" == "msys" ]]; then
     bind '"\C-_":backward-kill-word'  # ctrl-backspace kills chars backward (Ctrl-w)
