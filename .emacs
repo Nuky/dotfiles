@@ -313,6 +313,8 @@
   :config
   ;; enable completion using jedi backend
   (use-package jedi :ensure t)
+  ;; use python3 rpc
+  (setq elpy-rpc-python-command "python3")
   ;; use flycheck rather than flymake
   (remove-hook 'elpy-modules 'elpy-module-flymake)
   :bind (:map elpy-mode-map
