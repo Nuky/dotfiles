@@ -27,8 +27,6 @@
 [core]
 	pager = less -F
 	whitespace = trailing-space,space-before-tab,cr-at-eol
-[push]
-	default = current
 [color]
 	ui = auto
 	grep = auto
