@@ -16,8 +16,8 @@ fi
 alias mkdir='mkdir -p -v'
 # useful aliases
 alias e='emacs -nw'
-alias la='ll -a'
 alias ll='ls -l'
+alias la='ll -a'
 alias lld='ll -d */'
 if command -v dircolors >/dev/null 2>&1; then
     eval $(dircolors -b) # colors for lsd -(*,*)_
@@ -112,7 +112,7 @@ fi
 if [[ "$OSTYPE" != "msys" ]]; then
     export GIT_PS1_SHOWDIRTYSTATE=1
     export GIT_PS1_SHOWSTASHSTATE=1
-    export GIT_PS1_SHOWUNTRACKEDFILES=1
+    #export GIT_PS1_SHOWUNTRACKEDFILES=1  # this one can be very slow
     export GIT_PS1_SHOWUPSTREAM="auto"
 fi
 export GIT_PS1_SHOWCOLORHINTS=1
