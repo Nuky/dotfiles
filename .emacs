@@ -105,6 +105,7 @@
 (setq-default indent-tabs-mode nil)                  ; Use spaces for indentation
 (setq x-stretch-cursor t)                            ; Draw cursor as wide as the glyph under point
 (setq auto-window-vscroll nil)                       ; Workaround performance issues with next-line
+(when (>= emacs-major-version 27) (global-so-long-mode 1)); Mitigate slowness due to very long lines
 
 ;; Show the current function name in the header line instead of the modeline
 (which-function-mode)
