@@ -2,7 +2,7 @@
 
 ;;; Commentary:
 
-;; Works on Emacs 25.1.1
+;; Works on Emacs 26.1 and 27.1
 ;; Uses builtin package.el and use-package.
 ;;
 ;; To install, simply symlink or add the following to ~/.emacs:
@@ -44,7 +44,8 @@
 (setq package-archive-priorities '(("melpa-stable" . 10)
                                    ("gnu" . 5) ; default gnu elpa
                                    ("melpa"        . 0)))
-(package-initialize)
+(when (< emacs-major-version 27)
+  (package-initialize))
 ;;(package-install-selected-packages)
 
 ;;; Bootstrap use-package
