@@ -198,7 +198,9 @@
 ;;; tooltips for currently entered command (prefix)
 (use-package which-key :ensure t
   :diminish ""
-  :config (which-key-mode))
+  :config (which-key-mode)
+  :custom
+  (which-key-add-column-padding 1))
 
 ;;; expand region semantically around cursor
 (use-package expand-region :ensure t
