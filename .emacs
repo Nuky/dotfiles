@@ -108,12 +108,6 @@
 (setq auto-window-vscroll nil)                       ; Workaround performance issues with next-line
 (when (>= emacs-major-version 27) (global-so-long-mode 1)); Mitigate slowness due to very long lines
 
-;; Show the current function name in the header line instead of the modeline
-(which-function-mode)
-(set-face-foreground 'which-func "#88AAFF")
-(setq-default header-line-format '((which-func-mode ("" which-func-format " "))))
-(setq mode-line-misc-info (assq-delete-all 'which-function-mode mode-line-misc-info))
-
 ;; forbid moving point into read-only part of the prompt
 (plist-put minibuffer-prompt-properties 'point-entered 'minibuffer-avoid-prompt)
 
