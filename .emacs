@@ -71,7 +71,8 @@
 (setq ring-bell-function 'ignore)                    ; NO stupid bell sound
 (if (functionp 'scroll-bar-mode)(scroll-bar-mode -1)); No scrollbar
 (if (functionp 'tool-bar-mode)(tool-bar-mode -1))    ; No toolbar
-(menu-bar-mode -1)                                   ; No menubar
+(unless (and (display-graphic-p) (eq system-type 'darwin)); No menubar except for graphical on
+  (menu-bar-mode -1))                                     ; mac where it doesn't waste space
 (fset 'yes-or-no-p 'y-or-n-p)                        ; 'y/n' instead of 'yes/no'
 (setq line-number-mode t)                            ; Line number in modeline
 (setq column-number-mode t)                          ; Column number in modeline
