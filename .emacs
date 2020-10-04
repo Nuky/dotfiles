@@ -133,11 +133,14 @@
 ;; frame title
 (setq frame-title-format '("%b" (buffer-file-name ": %f") " [" (:eval mode-name) "]"))
 
-;;; windmove -- [M-arrows] to move from window to window
+;;; windmove -- [M-arrows]/[M-S-arrows] to move/swap buffer in direction
 (windmove-default-keybindings 'meta)
+(when (>= emacs-major-version 27)
+  (windmove-swap-states-default-keybindings '(meta shift)))
 
-;;; swap buffers like windmove
+;; fallback to buffer-move when windmove-swap-states is not available (emacs 26)
 (use-package buffer-move :ensure t
+  :if (< emacs-major-version 27)
   :bind (("M-S-<up>" . buf-move-up)
          ("M-S-<down>" . buf-move-down)
          ("M-S-<left>" . buf-move-left)
