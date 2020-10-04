@@ -79,6 +79,7 @@
 (setq display-time-24hr-format t)                    ; 24h time format in modeline
 (size-indication-mode t)                             ; Show size of file in modeline
 (setq font-lock-maximum-decoration t)                ; Unleash a rainbow of colors
+(setq diff-font-lock-prettify t)                     ; Prettier diff-mode
 (global-font-lock-mode t)                            ; Enable colors
 (show-paren-mode t)                                  ; Highlight matching paren
 (global-hl-line-mode (- (display-color-cells) 16))   ; Highlight current line everywhere
