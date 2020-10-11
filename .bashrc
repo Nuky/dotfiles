@@ -23,9 +23,7 @@ if command -v dircolors >/dev/null 2>&1; then
     eval $(dircolors -b) # colors for lsd -(*,*)_
 fi
 alias lsd='ls -d */'
-if [[ "$OSTYPE" == "msys" ]]; then
-    alias open='start'
-elif [[ "$OSTYPE" == "darwin"* ]]; then
+if [[ "$OSTYPE" == "darwin"* ]]; then
     :
 elif (( EUID )); then
     alias open='xdg-open'
@@ -64,11 +62,7 @@ if command -v docker-compose >/dev/null 2>&1; then
 fi
 
 # key bindings
-if [[ "$OSTYPE" == "msys" ]]; then
-    bind '"\C-_":backward-kill-word'  # ctrl-backspace kills chars backward (Ctrl-w)
-    bind '"\e[1;5D":backward-word'    # ctrl-left to move to previous word
-    bind '"\e[1;5C":forward-word'     # ctrl-right to move to next word
-elif [[ "$OSTYPE" == "darwin"* ]]; then
+if [[ "$OSTYPE" == "darwin"* ]]; then
     bind '"\e[1;5D":backward-word'    # ctrl-left to move to previous word
     bind '"\e[1;5C":forward-word'     # ctrl-right to move to next word
 else
@@ -108,13 +102,10 @@ fi
 # to the branch name.  You can configure this per-repository
 # with the bash.showDirtyState variable, which defaults to true
 # once GIT_PS1_SHOWDIRTYSTATE is enabled.
-# This is too slow on windows :(
-if [[ "$OSTYPE" != "msys" ]]; then
-    export GIT_PS1_SHOWDIRTYSTATE=1
-    export GIT_PS1_SHOWSTASHSTATE=1
-    #export GIT_PS1_SHOWUNTRACKEDFILES=1  # this one can be very slow
-    export GIT_PS1_SHOWUPSTREAM="auto"
-fi
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+#export GIT_PS1_SHOWUNTRACKEDFILES=1  # this one can be very slow
+export GIT_PS1_SHOWUPSTREAM="auto"
 export GIT_PS1_SHOWCOLORHINTS=1
 
 # Modify the prompt further for iTerm2 integration (do not fiddle with prompt after this!)
