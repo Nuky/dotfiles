@@ -259,6 +259,14 @@
     (company-quickhelp-mode 1))
   :bind ("M-p" . company-complete-common))
 
+;;; show ansi colors in compile buffer
+(use-package ansi-color :ensure nil
+  :config
+  (defun my-colorize-compilation-buffer ()
+    (when (eq major-mode 'compilation-mode)
+      (ansi-color-apply-on-region compilation-filter-start (point-max))))
+  :hook (compilation-filter . my-colorize-compilation-buffer))
+
 ;;; C/C++ IDE
 ;;; - irony with flycheck and company
 ;;; - rtags for symbol browsing
