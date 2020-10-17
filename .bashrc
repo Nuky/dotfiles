@@ -65,6 +65,8 @@ fi
 if [[ "$OSTYPE" == "darwin"* ]]; then
     bind '"\e[1;5D":backward-word'    # ctrl-left to move to previous word
     bind '"\e[1;5C":forward-word'     # ctrl-right to move to next word
+    bind '"\e[1;3D":backward-word'    # meta-left to move to previous word
+    bind '"\e[1;3C":forward-word'     # meta-right to move to next word
 else
     bind '"\C-h":backward-kill-word'  # ctrl-backspace kills chars backward (Ctrl-w)
 fi
