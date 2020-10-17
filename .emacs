@@ -395,7 +395,11 @@
   (define-key function-key-map "\e[1;3D" [M-left])
   (define-key function-key-map "\e[1;3C" [M-right])
   (define-key function-key-map "\e[1;3A" [M-up])
-  (define-key function-key-map "\e[1;3B" [M-down]))
+  (define-key function-key-map "\e[1;3B" [M-down])
+  (define-key function-key-map "\e[1;10D" [S-M-left])
+  (define-key function-key-map "\e[1;10C" [S-M-right])
+  (define-key function-key-map "\e[1;10A" [S-M-up])
+  (define-key function-key-map "\e[1;10B" [S-M-down]))
 
 ;;; tweaks when graphical
 (when (display-graphic-p)
