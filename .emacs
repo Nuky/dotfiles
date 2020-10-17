@@ -13,10 +13,9 @@
 
 ;;; Code:
 
-(defvar my-init-file-start-time (current-time))
-
-;; set garbage collector threshold to 10MB, considerably speeding up emacs
-(setq gc-cons-threshold (* 10 1024 1024))
+;; set garbage collector threshold to 20MB during startup, considerably speeding up emacs
+(setq gc-cons-threshold (* 20 1024 1024))
+(add-hook 'after-init-hook (lambda () (setq gc-cons-threshold (* 2 1024 1024))))
 
 ;; disable running regexes on filenames when loading .el files, speeding up emacs
 (setq-local file-name-handler-alist nil)
@@ -58,7 +57,6 @@
   (require 'use-package))
 (unless (package-installed-p 'diminish)
   (package-install 'diminish))
-(require 'bind-key)
 
 (setq use-package-compute-statistics t) ; view the statistical report using `use-package-report'
 
@@ -130,9 +128,17 @@
 (setq frame-title-format '("%b" (buffer-file-name ": %f") " [" (:eval mode-name) "]"))
 
 ;;; windmove -- [M-arrows]/[M-S-arrows] to move/swap buffer in direction
-(windmove-default-keybindings 'meta)
-(when (>= emacs-major-version 27)
-  (windmove-swap-states-default-keybindings '(meta shift)))
+(use-package windmove :ensure nil
+  :bind (("M-<up>" . windmove-up)
+         ("M-<down>" . windmove-down)
+         ("M-<left>" . windmove-left)
+         ("M-<right>" . windmove-right)))
+(use-package windmove :ensure nil
+  :if (>= emacs-major-version 27)
+  :bind (("M-S-<up>" . windmove-swap-states-up)
+         ("M-S-<down>" . windmove-swap-states-down)
+         ("M-S-<left>" . windmove-swap-states-left)
+         ("M-S-<right>" . windmove-swap-states-right)))
 
 ;; fallback to buffer-move when windmove-swap-states is not available (emacs 26)
 (use-package buffer-move :ensure t
@@ -403,9 +409,7 @@
 ;;; Replace GNU advertising
 (defun display-startup-echo-area-message ()
   "Display time since startup."
-  (message "All done in %.02fs, %s%s"
-           (float-time (time-since my-init-file-start-time))
-           (user-login-name) ". \\o/"))
+  (message "All done in %s, %s. \\o/" (emacs-init-time) (user-login-name)))
 
 (provide '.emacs)
 ;;; .emacs ends here
