@@ -60,10 +60,12 @@
 
 (setq use-package-compute-statistics t) ; view the statistical report using `use-package-report'
 
-;;; fix exec-path when windowed (this is slow!)
+;;; fix exec-path when windowed
 (use-package exec-path-from-shell :ensure t
   :if (memq window-system '(mac ns x))
-  :config (exec-path-from-shell-initialize))
+  :config
+  (setq exec-path-from-shell-arguments (delete "-i" exec-path-from-shell-arguments))
+  (exec-path-from-shell-initialize))
 
 ;;; usual tweaks
 (setq ring-bell-function 'ignore)                    ; NO stupid bell sound
