@@ -89,8 +89,6 @@
 (setq next-screen-context-lines 3)                   ; Page up/down keep 3 lines
 (setq mouse-yank-at-point t)                         ; Mouse paste on text pointer
 (setq scroll-preserve-screen-position t)             ; Page up/down preserve point on screen
-(mouse-avoidance-mode 'animate)                      ; Move the mouse away when cursor approaches !
-(if (functionp 'mouse-wheel-mode)(mouse-wheel-mode t)); Enable mouse-wheel to scroll
 (setq kill-whole-line t)                             ; Cut whole line when point is at col0
 (delete-selection-mode t)                            ; Overwrite region selected
 (setq uniquify-buffer-name-style 'forward)           ; Add parent dirs to buffer names when ambiguous
