@@ -410,6 +410,7 @@
 (global-set-key [mouse-3] 'imenu)                        ; Right-click list of functions
 (global-set-key [C-M-up] 'scroll-down-line)              ; Scroll line by line...
 (global-set-key [C-M-down] 'scroll-up-line)              ; ...leaving point in place
+(global-set-key (kbd "M-SPC") 'cycle-spacing)            ; a more versatile just-one-space
 (global-set-key (kbd "M-u") 'upcase-dwim)                ; region-aware upcase-word
 (global-set-key (kbd "M-l") 'downcase-dwim)              ; region-aware downcase-word
 (global-set-key (kbd "M-c") 'capitalize-dwim)            ; region-aware capitalize-word
