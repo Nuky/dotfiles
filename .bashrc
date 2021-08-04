@@ -28,6 +28,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 elif (( EUID )); then
     alias open='xdg-open'
 fi
+alias magit='emacs -nw --eval "(progn (magit-status) (delete-other-windows))"'
 # frequent typos :D
 alias k='l'
 alias kl='l'
