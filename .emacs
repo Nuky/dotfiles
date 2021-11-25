@@ -39,10 +39,8 @@
 ;; setup package repos for M-x package-*
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-(setq package-archive-priorities '(("melpa-stable" . 10)
-                                   ("gnu" . 5) ; default gnu elpa
-                                   ("melpa"        . 0)))
+(setq package-archive-priorities '(("gnu" . 5) ; default gnu elpa
+                                   ("melpa" . 0)))
 (when (< emacs-major-version 27)
   (package-initialize))
 ;;(package-install-selected-packages)
