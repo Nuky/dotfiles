@@ -423,7 +423,7 @@
 ;;; Replace GNU advertising
 (defun display-startup-echo-area-message ()
   "Display time since startup."
-  (message "All done in %s, %s. \\o/" (emacs-init-time) (user-login-name)))
+  (message "All done in %s with %s gcs, %s. \\o/" (emacs-init-time) gcs-done (user-login-name)))
 
 (provide '.emacs)
 ;;; .emacs ends here
