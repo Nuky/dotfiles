@@ -246,6 +246,14 @@
   :init
   (global-flycheck-mode))
 
+;;; show ansi colors in compile buffer
+(use-package ansi-color :ensure nil
+  :config
+  (defun my-colorize-compilation-buffer ()
+    (when (eq major-mode 'compilation-mode)
+      (ansi-color-apply-on-region compilation-filter-start (point-max))))
+  :hook (compilation-filter . my-colorize-compilation-buffer))
+
 ;;; Company completion menu for everything
 (use-package company :ensure t
   :diminish ""
@@ -257,13 +265,18 @@
     (company-quickhelp-mode 1))
   :bind ("M-p" . company-complete-common))
 
-;;; show ansi colors in compile buffer
-(use-package ansi-color :ensure nil
+;;; LSP
+(use-package lsp-mode :ensure t
+  :commands (lsp lsp-deferred)
+  :init
+  (setq lsp-keymap-prefix "C-c l")
   :config
-  (defun my-colorize-compilation-buffer ()
-    (when (eq major-mode 'compilation-mode)
-      (ansi-color-apply-on-region compilation-filter-start (point-max))))
-  :hook (compilation-filter . my-colorize-compilation-buffer))
+  (lsp-enable-which-key-integration t))
+
+(use-package lsp-ui :ensure t
+  :hook (lsp-mode . lsp-ui-mode))
+
+(use-package lsp-ivy :ensure t)
 
 ;;; C/C++
 (use-package cc-mode
