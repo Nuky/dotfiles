@@ -170,9 +170,9 @@
 (use-package ivy-rich :ensure t :defer t
   :after ivy
   :custom
-  (ivy-virtual-abbreviate 'full
-                          ivy-rich-switch-buffer-align-virtual-buffer t
-                          ivy-rich-path-style 'abbrev)
+  (ivy-virtual-abbreviate 'full)
+  (ivy-rich-switch-buffer-align-virtual-buffer t)
+  (ivy-rich-path-style 'abbrev)
   :config
   (ivy-rich-mode 1))
 
