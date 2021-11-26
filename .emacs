@@ -322,16 +322,13 @@
               ("M-}" . rtags-next-match)))           ; ... that return multiple results
 
 ;;; Python IDE
-(use-package elpy
+(use-package elpy :ensure t :defer t
   :commands elpy-enable
-  :init (with-eval-after-load 'python (elpy-enable))
+  :init (advice-add 'python-mode :before 'elpy-enable)
   :config
-  ;; enable completion using jedi backend
-  (use-package jedi :ensure t)
-  ;; use python3 rpc
-  (setq elpy-rpc-python-command "python3")
   ;; use flycheck rather than flymake
   (remove-hook 'elpy-modules 'elpy-module-flymake)
+  :custom (elpy-rpc-python-command "python3")
   :bind (:map elpy-mode-map
               ("C-c f" . elpy-format-code)
               ;; restore windmove keybinds
