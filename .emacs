@@ -280,7 +280,8 @@
 (use-package lsp-ui :ensure t
   :hook (lsp-mode . lsp-ui-mode))
 
-(use-package lsp-ivy :ensure t)
+(use-package lsp-ivy :ensure t
+  :commands lsp-ivy-workspace-symbol)
 
 ;;; C/C++
 (use-package cc-mode
