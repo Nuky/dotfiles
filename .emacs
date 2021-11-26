@@ -166,9 +166,9 @@
   :bind (([remap switch-to-buffer] . ivy-switch-buffer)
          ([remap switch-to-buffer-other-window] . ivy-switch-buffer-other-window)))
 
-;; better switch-buffer powered by ivy
-(use-package ivy-rich :ensure t
-  :after (:all ivy counsel)
+;; display additional information for completion items (ie: switch-buffer shows major-modes)
+(use-package ivy-rich :ensure t :defer t
+  :after ivy
   :custom
   (ivy-virtual-abbreviate 'full
                           ivy-rich-switch-buffer-align-virtual-buffer t
@@ -180,6 +180,7 @@
 (use-package counsel :ensure t
   :config
   (use-package smex :ensure t)       ; automatically used for counsel-M-x
+  (ivy-rich-reload)                  ; ensure ivy-rich also applies to counsel functions
   :bind (("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)
          ("C-h f" . counsel-describe-function)
