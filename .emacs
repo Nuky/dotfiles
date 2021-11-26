@@ -263,7 +263,11 @@
   (when (display-graphic-p)
     (use-package company-quickhelp :ensure t)
     (company-quickhelp-mode 1))
-  :bind ("M-p" . company-complete-common))
+  :bind ("M-p" . company-complete-common)
+  :custom
+  (company-minimum-prefix-length 2)
+  (company-idle-delay 0.2))
+
 
 ;;; LSP
 (use-package lsp-mode :ensure t
