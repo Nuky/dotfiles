@@ -119,8 +119,8 @@
 (add-hook 'prog-mode-hook (lambda () (interactive) (setq show-trailing-whitespace 1)))
 
 ;; delete trailing whitespaces on save (source code only)
-(add-hook 'before-save-hook '(lambda() (when (derived-mode-p 'prog-mode)
-                                         (delete-trailing-whitespace))))
+(add-hook 'before-save-hook (lambda() (when (derived-mode-p 'prog-mode)
+                                        (delete-trailing-whitespace))))
 
 ;; frame title
 (setq frame-title-format '("%b" (buffer-file-name ": %f") " [" (:eval mode-name) "]"))
@@ -204,7 +204,8 @@
   :diminish ""
   :config (which-key-mode)
   :custom
-  (which-key-add-column-padding 1))
+  (which-key-add-column-padding 1)
+  (which-key-idle-secondary-delay 0))
 
 ;;; expand region semantically around cursor
 (use-package expand-region :ensure t
