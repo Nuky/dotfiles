@@ -39,6 +39,8 @@
 	lineNumber = true
 [column]
 	ui = auto
+[merge]
+	conflictStyle = diff3
 [rebase]
 	stat = true
 [status]
