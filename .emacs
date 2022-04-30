@@ -256,7 +256,7 @@
 (use-package gitattributes-mode :ensure t :defer t)
 
 ;;; CMakeLists.txt files support
-(use-package cmake-mode :ensure t :defer t)
+(use-package cmake-mode :defer t)
 
 ;;; Markdown files support
 (use-package markdown-mode :ensure t :defer t)
@@ -342,7 +342,7 @@
               ("M-<right>" . nil)))
 
 ;;; .tf files support
-(use-package terraform-mode :ensure t :defer t)
+(use-package terraform-mode :defer t)
 
 ;;; .json files support
 (use-package json-mode :ensure t :defer t)
@@ -351,7 +351,7 @@
 (use-package protobuf-mode :ensure t :defer t)
 
 ;;; .thrift files support
-(use-package thrift :ensure t :defer t
+(use-package thrift :defer t
   :config
   (setq thrift-indent-level 4)
   :mode ("\\.thrift$" . thrift-mode))
@@ -365,14 +365,14 @@
   ("scala" . scala-mode))
 
 ;;; .lua files support
-(use-package lua-mode :ensure t :defer t)
+(use-package lua-mode :defer t)
 
 ;;; .yml files support
 (use-package yaml-mode :ensure t
   :mode ("\\.yml$" . yaml-mode))
 
 ;;; 3D .obj/.mtl files support
-(use-package wavefront-obj-mode :ensure t
+(use-package wavefront-obj-mode
   :mode (("\\.obj$" . wavefront-obj-mode)
          ("\\.mtl$" . wavefront-obj-mode)))
 
