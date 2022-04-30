@@ -285,6 +285,7 @@
     (company-quickhelp-mode 1))
   :bind ("M-p" . company-complete-common)
   :custom
+  (company-tooltip-align-annotations t)
   (company-minimum-prefix-length 2)
   (company-idle-delay 0.2))
 
