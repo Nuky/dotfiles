@@ -2,7 +2,7 @@
 
 ;;; Commentary:
 
-;; Works on Emacs 26.1 and 27.1
+;; Works on Emacs 26.1, 27.1 and 28.1
 ;; Uses builtin package.el and use-package.
 ;;
 ;; To install, simply symlink or add the following to ~/.emacs:
@@ -29,10 +29,7 @@
               (abbreviate-file-name (or load-file-name buffer-file-name))))
 (when (> (display-color-cells) 16)
   (load-theme 'wombat t)                        ; cool dark builtin theme
-  (set-face-underline 'highlight nil)           ; fix wombat theme with hl-line
-  (set-face-foreground 'highlight nil)          ; fix wombat theme with hl-line
   (set-face-background 'default "#090909")      ; really dark for better contrast
-  (set-face-background 'highlight "#1A1A1A")    ; darker highlight, more subtle
   (set-face-foreground 'font-lock-comment-face "orangered") ; redish comments
   (set-face-background 'mode-line "firebrick")) ; make active buffer more visible
 
@@ -81,7 +78,6 @@
 (setq diff-font-lock-prettify t)                     ; Prettier diff-mode
 (global-font-lock-mode t)                            ; Enable colors
 (show-paren-mode t)                                  ; Highlight matching paren
-(global-hl-line-mode (- (display-color-cells) 16))   ; Highlight current line everywhere
 (auto-image-file-mode t)                             ; Open images NOT in raw data
 (setq scroll-step 3)                                 ; Scroll lines 3 by 3
 (setq next-screen-context-lines 3)                   ; Page up/down keep 3 lines
@@ -124,6 +120,13 @@
 
 ;; frame title
 (setq frame-title-format '("%b" (buffer-file-name ": %f") " [" (:eval mode-name) "]"))
+
+;;; hl-line -- Highlight current line everywhere
+(use-package hl-line :ensure nil
+  :if (> (display-color-cells) 16)
+  :init (global-hl-line-mode)
+  :custom-face
+  (hl-line ((t (:background "#1A1A1A" :unerline nil :foreground nil)))))
 
 ;;; windmove -- [M-arrows]/[M-S-arrows] to move/swap buffer in direction
 (use-package windmove :ensure nil
