@@ -213,6 +213,22 @@
 (use-package expand-region :ensure t
   :bind ("C-=" . er/expand-region))
 
+;;; projectile
+(use-package projectile :ensure t :defer t
+  :config
+  ;; delay loaded until we visit a non virtual buffer
+  ;; we manually call projectile's find-file hook otherwise the first real file visited would have incorrect modeline
+  ;; TODO more correct way to do this?
+  (defun my-projectile-find-file-hook-first-time ()
+    (projectile-mode +1)
+    (projectile-find-file-hook-function)
+    (remove-hook 'find-file-hook 'my-projectile-find-file-hook-first-time))
+  :custom
+  (projectile-completion-system 'ivy)
+  (projectile-mode-line-prefix " P")
+  :hook (find-file . my-projectile-find-file-hook-first-time)
+  :bind (:map projectile-mode-map ("C-c p" . projectile-command-map)))
+
 ;;; magit -- Git interface
 (use-package magit :ensure t :defer t
   :config
