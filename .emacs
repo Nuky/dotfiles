@@ -281,7 +281,10 @@
   (global-company-mode t)
   :config
   (when (display-graphic-p)
-    (use-package company-quickhelp :ensure t)
+    (use-package company-quickhelp :ensure t
+      :custom
+      (company-quickhelp-color-background "#1A1A1A")
+      (company-quickhelp-color-foreground "#F5F5F5"))
     (company-quickhelp-mode 1))
   :bind ("M-p" . company-complete-common)
   :custom
