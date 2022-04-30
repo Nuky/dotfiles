@@ -160,8 +160,6 @@
   (ivy-mode 1)                       ; properly enable ivy everywhere
   (setq ivy-use-virtual-buffers t)   ; add recent buffers when switching buffers
   (setq ivy-count-format "(%d/%d) ") ; display number of matches in prompt
-  ;; use fuzzy flx matching by default
-  (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
   (setq ivy-initial-inputs-alist nil)
   ;; somewhat hide rarely used buffers
   (add-to-list 'ivy-ignore-buffers "^\*")
@@ -184,6 +182,9 @@
   :config
   (use-package smex :ensure t)       ; automatically used for counsel-M-x
   (ivy-rich-reload)                  ; ensure ivy-rich also applies to counsel functions
+  ;; use fuzzy flx matching by default for M-x
+  (add-to-list 'ivy-re-builders-alist '(counsel-M-x . ivy--regex-fuzzy))
+  (add-to-list 'ivy-re-builders-alist '(counsel-git . ivy--regex-fuzzy))
   :bind (("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)
          ("C-h f" . counsel-describe-function)
@@ -197,8 +198,6 @@
 
 ;; incremental search powered by ivy
 (use-package swiper :ensure t
-  :config
-  (add-to-list 'ivy-re-builders-alist '(swiper . ivy--regex-plus))
   :bind (("C-s" . swiper)
          ("C-r" . swiper)))
 
