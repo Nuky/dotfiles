@@ -308,7 +308,7 @@
   :commands lsp-ivy-workspace-symbol)
 
 ;;; C/C++
-(use-package cc-mode
+(use-package cc-mode :ensure nil
   :config
   (defvaralias 'c-basic-offset 'tab-width)
   (add-to-list 'c-default-style '(c-mode . "bsd")) ; better default style
@@ -344,6 +344,22 @@
               ("M-<left>" . nil)
               ("M-<right>" . nil)))
 
+;;; Typescript IDE
+(use-package typescript-mode :defer t)
+(use-package tide :defer t
+  :after (typescript-mode company flycheck)
+  :hook ((typescript-mode . tide-setup)
+         (typescript-mode . tide-hl-identifier-mode)
+         ))
+(use-package web-mode
+  :config
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
+  (defun my/setup-tide-for-tsx()
+    (when (string-equal "tsx" (file-name-extension buffer-file-name))
+      (tide-setup)
+      (tide-hl-identifier-mode)))
+  :hook (web-mode . my/setup-tide-for-tsx)
+  :mode ("\\.tsx$" . web-mode))
 ;;; .tf files support
 (use-package terraform-mode :defer t)
 
