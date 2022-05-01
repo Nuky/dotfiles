@@ -236,6 +236,17 @@
   (setq exec-path (add-to-list 'exec-path "C:/Program Files (x86)/Git/bin"))
   :bind ("C-x g" . magit-status))
 
+;;; treemacs -- sidebar tree layout file explorer
+(use-package treemacs :defer t
+  :config
+  ;; The default width and height of the icons is 22 pixels. If you are
+  ;; using a Hi-DPI display, uncomment this to double the icon size.
+  ;(treemacs-resize-icons 44)
+  :bind (:map global-map
+              ("C-x t t" . treemacs-select-window)))
+(use-package treemacs-projectile :defer t :after treemacs projectile)
+(use-package treemacs-magit :defer t :after treemacs magit)
+
 ;;; .editorconfig support
 (use-package editorconfig :ensure t :defer t
   :diminish ""
