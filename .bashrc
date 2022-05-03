@@ -150,3 +150,10 @@ command -v pip3 >/dev/null 2>&1 && alias gpip3='PIP_REQUIRE_VIRTUALENV=false pip
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# useful functions
+
+jwtdecode ()
+{
+    jq -R 'split(".")[0,1] | gsub("-";"+") | gsub("_";"/") | @base64d | fromjson' <<< "${1}"
+}
