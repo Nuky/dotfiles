@@ -118,7 +118,7 @@ fi
 
 # don't clutter history too much
 export HISTCONTROL=ignoreboth
-export HISTIGNORE='history*'
+export HISTIGNORE='history*:cccccc*'
 export HISTSIZE=1000
 export HISTFILESIZE=2000
 
