@@ -193,7 +193,7 @@
          ("C-c g" . counsel-git)
          ("C-c j" . counsel-git-grep)
          ("C-c J" . counsel-rg)
-         ("M-§" . counsel-imenu)
+         ("C-c i" . counsel-imenu)
          ("M-y" . counsel-yank-pop)))
 
 ;; incremental search powered by ivy
