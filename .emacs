@@ -126,7 +126,7 @@
   :if (> (display-color-cells) 16)
   :init (global-hl-line-mode)
   :custom-face
-  (hl-line ((t (:background "#1A1A1A" :unerline nil :foreground nil)))))
+  (hl-line ((t (:background "#1A1A1A" :underline nil :foreground nil)))))
 
 ;;; windmove -- [M-arrows]/[M-S-arrows] to move/swap buffer in direction
 (use-package windmove :ensure nil
