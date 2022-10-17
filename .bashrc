@@ -43,6 +43,8 @@ if [[ -f /usr/share/bash-completion/bash_completion ]]; then
     source /usr/share/bash-completion/bash_completion
 elif [[ -f /usr/local/etc/bash_completion ]]; then
     source /usr/local/etc/bash_completion
+elif [[ -f /opt/homebrew/etc/bash_completion ]]; then
+    source /opt/homebrew/etc/bash_completion
 fi
 
 # g == git
@@ -52,6 +54,8 @@ elif [[ -f /usr/share/bash-completion/completions/git ]]; then
     source /usr/share/bash-completion/completions/git
 elif [[ -f /usr/local/etc/bash_completion.d/git-completion.bash ]]; then
     source /usr/local/etc/bash_completion.d/git-completion.bash
+elif [[ -f /opt/homebrew/etc/bash_completion.d/git-completion.bash ]]; then
+    source /opt/homebrew/etc/bash_completion.d/git-completion.bash
 fi
 alias gitk='gitk --all'
 alias g='git' && __git_complete g __git_main
@@ -84,6 +88,8 @@ elif [[ -f /etc/bash_completion.d/git-prompt ]]; then
     source /etc/bash_completion.d/git-prompt
 elif [[ -f /usr/local/etc/bash_completion.d/git-prompt.sh ]]; then
     source /usr/local/etc/bash_completion.d/git-prompt.sh
+elif [[ -f /opt/homebrew/etc/bash_completion.d/git-prompt.sh ]]; then
+    source /opt/homebrew/etc/bash_completion.d/git-prompt.sh
 fi
 if command -v __git_ps1 >/dev/null 2>&1; then
     __my_prompt_command() {
