@@ -262,9 +262,7 @@
 (use-package dockerfile-mode :ensure t :defer t)
 
 ;;; .git{ignore,config,attributes} files support
-(use-package gitignore-mode :ensure t :defer t)
-(use-package gitconfig-mode :ensure t :defer t)
-(use-package gitattributes-mode :ensure t :defer t)
+(use-package git-modes :ensure t :defer t)
 
 ;;; CMakeLists.txt files support
 (use-package cmake-mode :defer t)
