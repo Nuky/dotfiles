@@ -128,6 +128,12 @@
 ;; clickable URLs
 (add-hook 'text-mode-hook 'goto-address-mode)
 (add-hook 'prog-mode-hook 'goto-address-prog-mode)
+(add-hook 'conf-mode-hook 'goto-address-prog-mode)
+
+;; show line numbers
+(add-hook 'text-mode-hook 'display-line-numbers-mode)
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(add-hook 'conf-mode-hook 'display-line-numbers-mode)
 
 ;; show trailing whitespaces (source code only)
 (add-hook 'prog-mode-hook (lambda () (interactive) (setq show-trailing-whitespace 1)))
