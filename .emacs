@@ -76,11 +76,11 @@
 (setq use-package-compute-statistics t) ; view the statistical report using `use-package-report'
 
 ;;; fix exec-path when windowed
-(use-package exec-path-from-shell :ensure t
-  :if (memq window-system '(mac ns x))
-  :config
-  (setq exec-path-from-shell-arguments (delete "-i" exec-path-from-shell-arguments))
-  (exec-path-from-shell-initialize))
+(when (memq window-system '(mac ns x))
+  (use-package exec-path-from-shell :ensure t
+    :config
+    (setq exec-path-from-shell-arguments (delete "-i" exec-path-from-shell-arguments))
+    (exec-path-from-shell-initialize)))
 
 ;;; usual tweaks
 (setq ring-bell-function 'ignore)                    ; NO stupid bell sound
@@ -337,7 +337,8 @@
   (company-tooltip-align-annotations t)
   (company-minimum-prefix-length 2)
   (company-idle-delay 0.2))
-(use-package company-quickhelp :ensure t :defer t)
+(when (display-graphic-p)
+  (use-package company-quickhelp :ensure t :defer t))
 
 ;;; LSP
 (use-package lsp-mode :ensure t
