@@ -128,10 +128,6 @@ export HISTORY_IGNORE='(cccccc|fetch)*'  # do not store mistaps on yubikeys
 ### proper defaults
 export EDITOR=vim
 setopt CORRECT                  # correct typos
-setopt CORRECT_ALL              # correct typos everywhere?
-##shopt -s checkwinsize         # TODO (bash) adjust to terminal window size
-#setopt NO_CASE_GLOB            # TODO (bash) case-insensitive glob
-##shopt -s extglob              # TODO (bash) extended pattern matching operators using parens
 
 # Colored man pages
 if command -v man >/dev/null 2>&1; then
