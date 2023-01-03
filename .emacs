@@ -119,6 +119,21 @@
 ;; frame title
 (setq frame-title-format '("%b" (buffer-file-name ": %f") " [" (:eval mode-name) "]"))
 
+;; doom-modeline -- Neat modeline
+(when (display-graphic-p)
+  (use-package all-the-icons :ensure t)  ; make sure to run `M-x all-the-icons-install-fonts` once
+  (use-package doom-modeline :ensure t
+    :init (doom-modeline-mode 1)
+    :custom
+    (doom-modeline-time nil)
+    (doom-modeline-buffer-encoding :nondefault)
+    (doom-modeline-checker-simple-format nil) ; detailed numbers of info/warn/err
+    (doom-modeline-vcs-max-length 18)
+    (doom-modeline-buffer-file-name-style 'truncate-upto-project)
+    (doom-modeline-hud t)                 ; show buffer position/size as a scrollbar/minimap in the left-most part of the modeline
+    (doom-modeline-percent-position nil)  ; redundant with the hud
+    (doom-modeline-irc nil)))
+
 ;;; hl-line -- Highlight current line everywhere
 (use-package hl-line :ensure nil
   :if (> (display-color-cells) 16)
