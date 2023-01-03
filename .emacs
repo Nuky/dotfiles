@@ -28,10 +28,30 @@
               (replace-regexp-in-string "\n" "" (emacs-version))
               (abbreviate-file-name (or load-file-name buffer-file-name))))
 (when (> (display-color-cells) 16)
-  (load-theme 'wombat t)                        ; cool dark builtin theme
-  (set-face-background 'default "#090909")      ; really dark for better contrast
-  (set-face-foreground 'font-lock-comment-face "orangered") ; redish comments
-  (set-face-background 'mode-line "firebrick")) ; make active buffer more visible
+  (if (>= emacs-major-version 28)
+      (progn
+        (require-theme 'modus-themes)
+        (setq modus-themes-tabs-accented t)
+        (setq modus-themes-fringes 'subtle)
+        (setq modus-themes-mode-line '(borderless accented))
+        (setq modus-themes-bold-constructs t)
+        (setq modus-themes-italic-constructs t)
+        (setq modus-themes-syntax '(yellow-comments green-strings))
+        (setq modus-themes-paren-match '(bold intense))
+        (setq modus-themes-region '(bg-only))
+        (setq modus-themes-prompts '(intense))
+        (setq modus-themes-completions '(opinionated))
+        (setq modus-themes-headings '((t . (rainbow))))  ; org-mode colourful headings
+        (setq modus-themes-scale-headings t)             ; org-mode larger headings
+        (setq modus-themes-org-blocks 'gray-background)  ; org-mode code blocks background
+        (setq modus-themes-vivendi-color-overrides '((bg-main . "#090909")   ; tone down the contrast
+                                                     (fg-main . "#f3f3f3"))) ; between fg and bg
+        (load-theme 'modus-vivendi))
+    (progn
+      (load-theme 'wombat t)                          ; cool dark builtin theme
+      (set-face-background 'default "#090909")        ; really dark for better contrast
+      (set-face-foreground 'font-lock-comment-face "orangered") ; redish comments
+      (set-face-background 'mode-line "firebrick")))) ; make active buffer more visible
 
 ;; setup package repos for M-x package-*
 (require 'package)
@@ -137,9 +157,7 @@
 ;;; hl-line -- Highlight current line everywhere
 (use-package hl-line :ensure nil
   :if (> (display-color-cells) 16)
-  :init (global-hl-line-mode)
-  :custom-face
-  (hl-line ((t (:background "#1A1A1A" :underline nil :foreground nil)))))
+  :init (global-hl-line-mode))
 
 ;;; windmove -- [M-arrows]/[M-S-arrows] to move/swap buffer in direction
 (use-package windmove :ensure nil
@@ -302,18 +320,13 @@
   :init
   (global-company-mode t)
   :config
-  (when (display-graphic-p)
-    (use-package company-quickhelp :ensure t
-      :custom
-      (company-quickhelp-color-background "#1A1A1A")
-      (company-quickhelp-color-foreground "#F5F5F5"))
-    (company-quickhelp-mode 1))
+  (when (display-graphic-p) (company-quickhelp-mode 1))
   :bind ("M-p" . company-complete-common)
   :custom
   (company-tooltip-align-annotations t)
   (company-minimum-prefix-length 2)
   (company-idle-delay 0.2))
-
+(use-package company-quickhelp :ensure t :defer t)
 
 ;;; LSP
 (use-package lsp-mode :ensure t
