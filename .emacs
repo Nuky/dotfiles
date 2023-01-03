@@ -71,8 +71,6 @@
 (fset 'yes-or-no-p 'y-or-n-p)                        ; 'y/n' instead of 'yes/no'
 (setq line-number-mode t)                            ; Line number in modeline
 (setq column-number-mode t)                          ; Column number in modeline
-(display-time)                                       ; Time in modeline
-(setq display-time-24hr-format t)                    ; 24h time format in modeline
 (size-indication-mode t)                             ; Show size of file in modeline
 (setq font-lock-maximum-decoration t)                ; Unleash a rainbow of colors
 (setq diff-font-lock-prettify t)                     ; Prettier diff-mode
