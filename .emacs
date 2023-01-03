@@ -305,7 +305,12 @@
 (use-package cmake-mode :defer t)
 
 ;;; Markdown files support
-(use-package markdown-mode :ensure t :defer t)
+(use-package markdown-mode :ensure t :defer t
+  :custom
+  (markdown-enable-wiki-links t)
+  (markdown-italic-underscore t)
+  (markdown-asymmetric-header t)
+  (markdown-fontify-code-blocks-natively t))
 
 ;;; Flycheck everything
 (use-package flycheck :ensure t
