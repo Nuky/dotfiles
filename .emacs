@@ -71,7 +71,7 @@
 (fset 'yes-or-no-p 'y-or-n-p)                        ; 'y/n' instead of 'yes/no'
 (setq line-number-mode t)                            ; Line number in modeline
 (setq column-number-mode t)                          ; Column number in modeline
-(size-indication-mode t)                             ; Show size of file in modeline
+(unless (display-graphic-p) (size-indication-mode t)); Show size of file in modeline
 (setq font-lock-maximum-decoration t)                ; Unleash a rainbow of colors
 (setq diff-font-lock-prettify t)                     ; Prettier diff-mode
 (global-font-lock-mode t)                            ; Enable colors
