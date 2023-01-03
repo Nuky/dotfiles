@@ -367,9 +367,14 @@
               ("M-<right>" . nil)))
 
 ;;; Typescript IDE
+;; for yarn PnP support, see: https://github.com/ramblehead/.emacs.d/blob/master/lisp/yarn-pnp.el
 (use-package typescript-mode :defer t)
 (use-package tide :defer t
-  :after (typescript-mode company flycheck)
+  :after (:all (:any typescript-mode js) company flycheck)
+  :init
+  ;; somehow js-mode does not work with :hook, so here we go:
+  (add-hook 'js-mode-hook #'tide-setup)
+  (add-hook 'js-mode-hook #'tide-hl-identifier-mode)
   :hook ((typescript-mode . tide-setup)
          (typescript-mode . tide-hl-identifier-mode)
          ))
