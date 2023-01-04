@@ -151,7 +151,6 @@
   (use-package doom-modeline :ensure t
     :init (doom-modeline-mode 1)
     :custom
-    (doom-modeline-time nil)
     (doom-modeline-buffer-encoding :nondefault)
     (doom-modeline-checker-simple-format nil) ; detailed numbers of info/warn/err
     (doom-modeline-vcs-max-length 18)
