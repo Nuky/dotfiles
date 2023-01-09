@@ -399,7 +399,9 @@
               ("M-<right>" . nil)))
 
 ;;; Typescript IDE
-;; for yarn PnP support, see: https://github.com/ramblehead/.emacs.d/blob/master/lisp/yarn-pnp.el
+;; for yarn PnP support, run:
+;;   YARN_ENABLE_IMMUTABLE_CACHE=false YARN_ENABLE_NETWORK=true yarn dlx @yarnpkg/sdks base
+;; also see: https://github.com/ramblehead/.emacs.d/blob/master/lisp/yarn-pnp.el
 (use-package typescript-mode :defer t)
 (use-package tide :defer t
   :after (:all (:any typescript-mode js) company flycheck)
