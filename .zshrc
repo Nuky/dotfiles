@@ -85,8 +85,8 @@ autoload -Uz vcs_info add-zsh-hook
 setopt PROMPT_SUBST                  # enable ${} substitution
 export VIRTUAL_ENV_DISABLE_PROMPT=1  # instruct venvs to not fiddle with our prompt
 zstyle ":vcs_info:*" enable git
-zstyle ":vcs_info:*" formats "(%F{green}%b:%1.7i%f%u%c)"
-zstyle ":vcs_info:*" actionformats "(%F{green}%b:%1.7i%f%u%c|%a%m)"
+zstyle ":vcs_info:*" formats "(%F{green}%42>…>%b%<<:%1.7i%f%u%c)"
+zstyle ":vcs_info:*" actionformats "(%F{green}%42>…>%b%<<:%1.7i%f%u%c|%a%m)"
 zstyle ":vcs_info:*" branchformat "%b"
 zstyle ":vcs_info:*" unstagedstr " %F{red}*%f"
 zstyle ":vcs_info:*" stagedstr " %F{green}+%f"
