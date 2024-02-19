@@ -327,6 +327,12 @@
   (add-hook 'prog-mode-hook (lambda () (when buffer-file-name (editorconfig-mode 1))))
   (add-hook 'text-mode-hook (lambda () (when buffer-file-name (editorconfig-mode 1)))))
 
+;;; Browse on web UI
+(use-package browse-at-remote :ensure t :defer t
+  :custom (browse-at-remote-add-line-number-if-no-region-selected nil)
+  :bind (("M-g r" . browse-at-remote)
+         ("M-g R" . browse-at-remote-kill)))
+
 ;;; Make the file executable using sh-set-shell or executable-set-magic
 (use-package executable :ensure nil :defer t
   :custom (executable-prefix-env t))
