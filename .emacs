@@ -468,7 +468,10 @@
   (add-hook 'go-mode-hook 'go-eldoc-setup))
 
 ;;; .tf files support
-(use-package terraform-mode :defer t)
+(use-package terraform-mode :defer t
+  :config
+  (company-terraform-init))
+(use-package company-terraform :defer t)
 
 ;;; .json files support
 (use-package json-mode :ensure t :defer t)
