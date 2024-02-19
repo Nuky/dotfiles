@@ -285,11 +285,13 @@
   (defun my-projectile-find-file-hook-first-time ()
     (projectile-mode +1)
     (projectile-find-file-hook-function)
-    (remove-hook 'find-file-hook 'my-projectile-find-file-hook-first-time))
+    (remove-hook 'find-file-hook 'my-projectile-find-file-hook-first-time)
+    (remove-hook 'dired-mode-hook 'my-projectile-find-file-hook-first-time))
   :custom
   (projectile-completion-system 'ivy)
   (projectile-mode-line-prefix " P")
-  :hook (find-file . my-projectile-find-file-hook-first-time)
+  :hook ((find-file . my-projectile-find-file-hook-first-time)
+         (dired-mode . my-projectile-find-file-hook-first-time))
   :bind (:map projectile-mode-map ("C-c p" . projectile-command-map)))
 
 ;;; magit -- Git interface
