@@ -427,7 +427,10 @@
   :config
   ;; use flycheck rather than flymake
   (remove-hook 'elpy-modules 'elpy-module-flymake)
-  :custom (elpy-rpc-python-command "python3")
+  :custom
+  (elpy-rpc-python-command "python3")
+  (elpy-rpc-ignored-buffer-size 409600) ; default is 102400
+  (elpy-rpc-timeout 2)                  ; default is 1
   :bind (:map elpy-mode-map
               ("C-c f" . elpy-format-code)
               ;; restore windmove keybinds
