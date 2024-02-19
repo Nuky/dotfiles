@@ -49,3 +49,5 @@
 	submodule = log
 [pull]
 	rebase = true
+[push]
+	useForceIfIncludes = true
