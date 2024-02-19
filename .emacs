@@ -178,6 +178,14 @@
     (doom-modeline-percent-position nil)  ; redundant with the hud
     (doom-modeline-irc nil)))
 
+;; pixel-scroll-precision -- Smooth scrolling
+(use-package pixel-scroll :ensure nil
+  :if (and (>= emacs-major-version 29) (display-graphic-p))
+  :init (pixel-scroll-precision-mode 1)
+  ;; unbind page up/down - otherwise they do not work in ivy
+  :bind (:map pixel-scroll-precision-mode-map (("<prior>" . nil)
+                                               ("<next>" . nil))))
+
 ;;; hl-line -- Highlight current line everywhere
 (use-package hl-line :ensure nil
   :if (> (display-color-cells) 16)
