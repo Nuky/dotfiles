@@ -143,9 +143,6 @@
 ;; forbid moving point into read-only part of the prompt
 (plist-put minibuffer-prompt-properties 'point-entered 'minibuffer-avoid-prompt)
 
-;; if the script has a first line of "#!" then do chmod a+x
-(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
-
 ;; clickable URLs
 (add-hook 'text-mode-hook 'goto-address-mode)
 (add-hook 'prog-mode-hook 'goto-address-prog-mode)
@@ -319,6 +316,10 @@
   ;; delay loaded until we visit a non virtual buffer
   (add-hook 'prog-mode-hook (lambda () (when buffer-file-name (editorconfig-mode 1))))
   (add-hook 'text-mode-hook (lambda () (when buffer-file-name (editorconfig-mode 1)))))
+
+;;; Make the file executable using sh-set-shell or executable-set-magic
+(use-package executable :ensure nil :defer t
+  :custom (executable-prefix-env t))
 
 ;;; Jenkinsfile files support
 (use-package groovy-mode :ensure t :defer t)
