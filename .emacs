@@ -31,22 +31,43 @@
   (if (>= emacs-major-version 28)
       (progn
         (require-theme 'modus-themes)
-        (setq modus-themes-tabs-accented t)
-        (setq modus-themes-fringes 'subtle)
-        (setq modus-themes-mode-line '(borderless accented))
-        (setq modus-themes-bold-constructs t)
-        (setq modus-themes-italic-constructs t)
-        (setq modus-themes-syntax '(yellow-comments green-strings))
-        (setq modus-themes-paren-match '(bold intense))
-        (setq modus-themes-region '(bg-only))
-        (setq modus-themes-prompts '(intense))
-        (setq modus-themes-completions '(opinionated))
-        (setq modus-themes-headings '((t . (rainbow))))  ; org-mode colourful headings
-        (setq modus-themes-scale-headings t)             ; org-mode larger headings
-        (setq modus-themes-org-blocks 'gray-background)  ; org-mode code blocks background
-        (setq modus-themes-vivendi-color-overrides '((bg-main . "#090909")   ; tone down the contrast
-                                                     (fg-main . "#f3f3f3"))) ; between fg and bg
-        (load-theme 'modus-vivendi))
+
+        ;; tone down the contrast between fg and bg
+        (setq modus-themes-vivendi-color-overrides
+              '((bg-main . "#050505") (fg-main . "#f0f0f0") (fg-max . "#ffffff"))
+              modus-themes-operandi-color-overrides
+              '((bg-main . "#fafafa") (fg-main . "#0f0f0f") (fg-max . "#000000")))
+
+        (setq modus-themes-tabs-accented t
+              modus-themes-fringes 'subtle
+              modus-themes-mode-line '(borderless accented)
+              modus-themes-hl-line '()
+              modus-themes-prompts '(intense)
+              modus-themes-bold-constructs nil
+              modus-themes-italic-constructs t
+              modus-themes-syntax '(yellow-comments green-strings)
+              modus-themes-paren-match '(bold intense)
+              modus-themes-region '(bg-only)
+              modus-themes-completions '(opinionated)
+              modus-themes-box-buttons '(0.9)
+              ;; org-mode
+              modus-themes-headings '((t . (rainbow)))
+              modus-themes-scale-headings t
+              modus-themes-org-blocks 'gray-background)
+
+        (defun my/modus-themes-custom-faces ()
+          ;; Override and define faces
+          (modus-themes-with-colors
+            (custom-set-faces
+             `(font-lock-function-call-face ((,class :foreground ,magenta-faint)))
+             `(font-lock-variable-use-face ((,class :foreground ,fg-main)))
+             `(font-lock-property-use-face ((,class :foreground ,cyan-alt-faint)))
+             `(font-lock-bracket-face ((,class :foreground ,(modus-themes-color 'fg-max))))
+             `(font-lock-number-face ((,class :foreground ,yellow-faint)))
+             )))
+        (add-hook 'modus-themes-after-load-theme-hook #'my/modus-themes-custom-faces)
+
+        (modus-themes-load-vivendi))
     (progn
       (load-theme 'wombat t)                          ; cool dark builtin theme
       (set-face-background 'default "#090909")        ; really dark for better contrast
