@@ -344,7 +344,8 @@
 (use-package dockerfile-mode :ensure t :defer t)
 
 ;;; .git{ignore,config,attributes} files support
-(use-package git-modes :ensure t :defer t)
+(use-package git-modes :ensure t :defer t
+  :mode ("/CODEOWNERS\\'" . gitignore-mode))
 
 ;;; CMakeLists.txt files support
 (use-package cmake-mode :defer t)
