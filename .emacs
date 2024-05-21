@@ -307,7 +307,6 @@
   ;; The default width and height of the icons is 22 pixels. If you are
   ;; using a Hi-DPI display, uncomment this to double the icon size.
   ;(treemacs-resize-icons 44)
-  (treemacs-fringe-indicator-mode 'only-when-focused)  ; BUG? does not actually apply
   (treemacs-git-commit-diff-mode t)
   (when treemacs-python-executable
     (treemacs-git-commit-diff-mode t))
@@ -316,6 +315,7 @@
                (not (null treemacs-python-executable)))
     (`(t . t) (treemacs-git-mode 'deferred))
     (`(t . _) (treemacs-git-mode 'simple))))
+  :custom (treemacs-fringe-indicator-mode 'only-when-focused)
 (use-package treemacs-projectile :after (treemacs projectile))
 (use-package treemacs-magit :after (treemacs magit))
 
