@@ -12,7 +12,7 @@
 	lg = log --color --graph --pretty=format:'%C(auto)%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%aN>%Creset'
 	lgd = log --color --graph --pretty=format:'%C(auto)%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%aN>%Creset%+b'
 	lb = log --graph --simplify-by-decoration --pretty=format:'%d' --all
-	lgv = !git lg --boundary @{u}...HEAD
+	lgv = "!f() { from=${1:-'@{u}'}; shift; git lg --boundary \"${from}\"...HEAD \"$@\"; }; f"
 	lga = !git lg --all
 	lgda = !git lgd --all
 	pr = pull --rebase --stat
