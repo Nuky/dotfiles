@@ -179,12 +179,12 @@
     (doom-modeline-irc nil)))
 
 ;; pixel-scroll-precision -- Smooth scrolling
-(use-package pixel-scroll :ensure nil
-  :if (and (>= emacs-major-version 29) (display-graphic-p))
-  :init (pixel-scroll-precision-mode 1)
-  ;; unbind page up/down - otherwise they do not work in ivy
-  :bind (:map pixel-scroll-precision-mode-map (("<prior>" . nil)
-                                               ("<next>" . nil))))
+(when (and (>= emacs-major-version 29) (display-graphic-p))
+  (use-package pixel-scroll :ensure nil
+    :init (pixel-scroll-precision-mode 1)
+    ;; unbind page up/down - otherwise they do not work in ivy
+    :bind (:map pixel-scroll-precision-mode-map (("<prior>" . nil)
+                                                 ("<next>" . nil)))))
 
 ;;; hl-line -- Highlight current line everywhere
 (use-package hl-line :ensure nil
@@ -197,20 +197,18 @@
          ("M-<down>" . windmove-down)
          ("M-<left>" . windmove-left)
          ("M-<right>" . windmove-right)))
-(use-package windmove :ensure nil
-  :if (>= emacs-major-version 27)
-  :bind (("M-S-<up>" . windmove-swap-states-up)
-         ("M-S-<down>" . windmove-swap-states-down)
-         ("M-S-<left>" . windmove-swap-states-left)
-         ("M-S-<right>" . windmove-swap-states-right)))
-
-;; fallback to buffer-move when windmove-swap-states is not available (emacs 26)
-(use-package buffer-move :ensure t
-  :if (< emacs-major-version 27)
-  :bind (("M-S-<up>" . buf-move-up)
-         ("M-S-<down>" . buf-move-down)
-         ("M-S-<left>" . buf-move-left)
-         ("M-S-<right>" . buf-move-right)))
+(if (>= emacs-major-version 27)
+    (use-package windmove :ensure nil
+      :bind (("M-S-<up>" . windmove-swap-states-up)
+             ("M-S-<down>" . windmove-swap-states-down)
+             ("M-S-<left>" . windmove-swap-states-left)
+             ("M-S-<right>" . windmove-swap-states-right)))
+  ;; fallback to buffer-move when windmove-swap-states is not yet available
+  (use-package buffer-move :ensure t
+    :bind (("M-S-<up>" . buf-move-up)
+           ("M-S-<down>" . buf-move-down)
+           ("M-S-<left>" . buf-move-left)
+           ("M-S-<right>" . buf-move-right))))
 
 ;;; ivy -- interactive completion for most things
 (use-package ivy :ensure t
@@ -548,7 +546,7 @@
 (global-set-key [mouse-3] 'imenu)                        ; Right-click list of functions
 (global-set-key [C-M-up] 'scroll-down-line)              ; Scroll line by line...
 (global-set-key [C-M-down] 'scroll-up-line)              ; ...leaving point in place
-(global-set-key (kbd "M-SPC") 'cycle-spacing)            ; a more versatile just-one-space
+(global-set-key (kbd "M-SPC") 'cycle-spacing)            ; a more versatile just-one-space (now default in >=29)
 (global-set-key (kbd "M-u") 'upcase-dwim)                ; region-aware upcase-word
 (global-set-key (kbd "M-l") 'downcase-dwim)              ; region-aware downcase-word
 (global-set-key (kbd "M-c") 'capitalize-dwim)            ; region-aware capitalize-word
