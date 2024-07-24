@@ -312,8 +312,8 @@
   (pcase (cons (not (null (executable-find "git")))
                (not (null treemacs-python-executable)))
     (`(t . t) (treemacs-git-mode 'deferred))
-    (`(t . _) (treemacs-git-mode 'simple))))
-  :custom (treemacs-fringe-indicator-mode 'only-when-focused)
+    (`(t . _) (treemacs-git-mode 'simple)))
+  :custom (treemacs-fringe-indicator-mode 'only-when-focused))
 (use-package treemacs-projectile :after (treemacs projectile))
 (use-package treemacs-magit :after (treemacs magit))
 
