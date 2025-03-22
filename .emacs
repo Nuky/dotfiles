@@ -140,6 +140,7 @@
 (setq x-stretch-cursor t)                            ; Draw cursor as wide as the glyph under point
 (setq auto-window-vscroll nil)                       ; Workaround performance issues with next-line
 (when (>= emacs-major-version 27) (global-so-long-mode 1)); Mitigate slowness due to very long lines
+(when (display-graphic-p) (setq confirm-kill-emacs 'y-or-n-p)); Prevent quitting by accident
 
 ;; forbid moving point into read-only part of the prompt
 (plist-put minibuffer-prompt-properties 'point-entered 'minibuffer-avoid-prompt)
