@@ -118,10 +118,11 @@
 (global-font-lock-mode t)                            ; Enable colors
 (show-paren-mode t)                                  ; Highlight matching paren
 (auto-image-file-mode t)                             ; Open images NOT in raw data
-(setq scroll-step 3)                                 ; Scroll lines 3 by 3
+(setq scroll-step 1)                                 ; Scroll smoothly when moving the cursor
 (setq next-screen-context-lines 3)                   ; Page up/down keep 3 lines
 (setq mouse-yank-at-point t)                         ; Mouse paste on text pointer
 (setq scroll-preserve-screen-position t)             ; Page up/down preserve point on screen
+(setq fast-but-imprecise-scrolling t)                ; Accelerate scrolling over unfontified regions
 (setq kill-whole-line t)                             ; Cut whole line when point is at col0
 (delete-selection-mode t)                            ; Overwrite region selected
 (setq uniquify-buffer-name-style 'forward)           ; Add parent dirs to buffer names when ambiguous
