@@ -27,6 +27,13 @@
       (format "%s\nconfig: %s"
               (replace-regexp-in-string "\n" "" (emacs-version))
               (abbreviate-file-name (or load-file-name buffer-file-name))))
+
+;; for python-ts-mode
+(defface font-lock-my-argument-use-face
+  '((default :inherit italic))
+  "Face for use of keyword arguments."
+  :group 'font-lock-faces)
+
 (when (> (display-color-cells) 16)
   (if (>= emacs-major-version 28)
       (progn
@@ -59,6 +66,7 @@
           ;; Override and define faces
           (modus-themes-with-colors
             (custom-set-faces
+             `(font-lock-my-argument-use-face ((,class :foreground ,green-alt-other-faint)))
              `(font-lock-function-call-face ((,class :foreground ,magenta-faint)))
              `(font-lock-variable-use-face ((,class :foreground ,fg-main)))
              `(font-lock-property-use-face ((,class :foreground ,cyan-alt-faint)))
@@ -436,7 +444,13 @@
 ;;; Python IDE
 (use-package elpy :ensure t :defer t
   :commands elpy-enable
-  :init (advice-add 'python-mode :before 'elpy-enable)
+  :init
+  (if (< emacs-major-version 29)
+      (advice-add 'python-mode :before 'elpy-enable)
+    ;; TODO possibly simpler in emacs 30
+    (advice-add 'python-base-mode :before 'elpy-enable)
+    ;; Fix until elpy-mode properly supports python-ts-mode
+    (add-hook 'python-ts-mode-hook 'elpy-mode))
   :config
   ;; use flycheck rather than flymake
   (remove-hook 'elpy-modules 'elpy-module-flymake)
@@ -451,6 +465,56 @@
               ("M-<down>" . nil)
               ("M-<left>" . nil)
               ("M-<right>" . nil)))
+
+(use-package python-ts-mode :ensure nil :defer t
+  :init
+  (defun my/python-ts-mode-hook ()
+    (when (< emacs-major-version 29)
+      ;; workaround for treesit not supporting "not in" and "is not" keywords
+      (add-to-list 'treesit-font-lock-settings
+                   (car (treesit-font-lock-rules
+                         :language 'python
+                         :feature 'keyword
+                         '(["not in" "is not"] @font-lock-keyword-face)))
+                   t))
+
+    ;; lambda/def keyword parameters
+    (add-to-list 'treesit-font-lock-settings
+                 (car (treesit-font-lock-rules
+                       :language 'python
+                       :feature 'variable
+                       :override 't
+                       '((keyword_argument name: (identifier) @font-lock-my-argument-use-face)))) ; non standard face
+                 t)
+
+    ;; lambda/def splat parameters
+    (add-to-list 'treesit-font-lock-settings
+                 (car (treesit-font-lock-rules
+                       :language 'python
+                       :feature 'variable
+                       :override 't
+                       '((parameters (list_splat_pattern (identifier) @font-lock-variable-name-face))
+                         (parameters (dictionary_splat_pattern (identifier) @font-lock-variable-name-face))
+                         (lambda_parameters (list_splat_pattern (identifier) @font-lock-variable-name-face))
+                         (lambda_parameters (dictionary_splat_pattern (identifier) @font-lock-variable-name-face)))))
+                 t)
+
+    ;; lambda/def parameters
+    (add-to-list 'treesit-font-lock-settings
+                 (car (treesit-font-lock-rules
+                       :language 'python
+                       :feature 'definition
+                       :override 't
+                       '((lambda_parameters (identifier) @font-lock-variable-name-face)
+                         (lambda_parameters (default_parameter name: (identifier) @font-lock-variable-name-face))
+                         (typed_parameter (identifier) @font-lock-variable-name-face)
+                         ;; experimental:
+                         (typed_parameter (list_splat_pattern (identifier) @font-lock-variable-name-face))
+                         (typed_parameter (dictionary_splat_pattern (identifier) @font-lock-variable-name-face))
+                         (typed_default_parameter name: (identifier) @font-lock-variable-name-face))))
+                 t))
+
+  :hook (python-ts-mode . my/python-ts-mode-hook))
 
 ;;; Typescript IDE
 ;; for yarn PnP support, run:
