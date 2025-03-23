@@ -2,7 +2,7 @@
 
 ;;; Commentary:
 
-;; Works on Emacs 26.1, 27.1 and 28.1
+;; Works on Emacs 26.1, 27.1, 28.1, 29.1, 30.1
 ;; Uses builtin package.el and use-package.
 ;;
 ;; To install, simply symlink or add the following to ~/.emacs:
@@ -35,52 +35,113 @@
   :group 'font-lock-faces)
 
 (when (> (display-color-cells) 16)
-  (if (>= emacs-major-version 28)
-      (progn
-        (require-theme 'modus-themes)
+  (cond
+   ((>= emacs-major-version 30)         ; modus-themes 4.4.0
+    (require-theme 'modus-themes)
 
-        ;; tone down the contrast between fg and bg
-        (setq modus-themes-vivendi-color-overrides
-              '((bg-main . "#050505") (fg-main . "#f0f0f0") (fg-max . "#ffffff"))
-              modus-themes-operandi-color-overrides
-              '((bg-main . "#fafafa") (fg-main . "#0f0f0f") (fg-max . "#000000")))
+    (setq modus-vivendi-palette-overrides
+          '(;; less contrast fg/bg
+            (bg-main "#050505")
+            (fg-main "#f0f0f0")
+            ;; subtler hl-line
+            (bg-hl-line "#0f1829"))
+          modus-operandi-palette-overrides
+          '(;; less contrast fg/bg
+            (bg-main "#fafafa")
+            (fg-main "#0f0f0f")
+            ;; subtler hl-line
+            (bg-hl-line "#eaf5fc")))
 
-        (setq modus-themes-tabs-accented t
-              modus-themes-fringes 'subtle
-              modus-themes-mode-line '(borderless accented)
-              modus-themes-hl-line '()
-              modus-themes-prompts '(intense)
-              modus-themes-bold-constructs nil
-              modus-themes-italic-constructs t
-              modus-themes-syntax '(yellow-comments green-strings)
-              modus-themes-paren-match '(bold intense)
-              modus-themes-region '(bg-only)
-              modus-themes-completions '(opinionated)
-              modus-themes-box-buttons '(0.9)
-              ;; org-mode
-              modus-themes-headings '((t . (rainbow)))
-              modus-themes-scale-headings t
-              modus-themes-org-blocks 'gray-background)
+    (setq modus-themes-common-palette-overrides
+          '(;; darker fringe
+            (fringe bg-inactive)
+            ;; borderless mode-line
+            (border-mode-line-active unspecified)
+            (border-mode-line-inactive unspecified)
+            ;; accented mode-line
+            (bg-mode-line-active bg-blue-subtle)
+            ;; comments and strings
+            (comment yellow-cooler)
+            (string green-cooler)
+            (docstring green-faint)
+            ;; region
+            (bg-region bg-lavender)
+            (fg-region unspecified)
+            ;; easy to spot cursor
+            (cursor magenta-intense)))
 
-        (defun my/modus-themes-custom-faces ()
-          ;; Override and define faces
-          (modus-themes-with-colors
-            (custom-set-faces
-             `(font-lock-my-argument-use-face ((,class :foreground ,green-alt-other-faint)))
-             `(font-lock-function-call-face ((,class :foreground ,magenta-faint)))
-             `(font-lock-variable-use-face ((,class :foreground ,fg-main)))
-             `(font-lock-property-use-face ((,class :foreground ,cyan-alt-faint)))
-             `(font-lock-bracket-face ((,class :foreground ,(modus-themes-color 'fg-max))))
-             `(font-lock-number-face ((,class :foreground ,yellow-faint)))
-             )))
-        (add-hook 'modus-themes-after-load-theme-hook #'my/modus-themes-custom-faces)
+    ;; https://protesilaos.com/emacs/modus-themes-changelog (see 4.0.0)
+    (setq modus-themes-prompts '(intense)
+          modus-themes-bold-constructs nil
+          modus-themes-italic-constructs t
+          modus-themes-completions '(opinionated)
+          ;; org-mode
+          modus-themes-headings '((1 . (rainbow 1.6))
+                                  (2 . (rainbow 1.4))
+                                  (3 . (rainbow 1.2))
+                                  (4 . (rainbow 1.1))
+                                  (t . (rainbow)))
+    )
 
-        (modus-themes-load-vivendi))
-    (progn
-      (load-theme 'wombat t)                          ; cool dark builtin theme
-      (set-face-background 'default "#090909")        ; really dark for better contrast
-      (set-face-foreground 'font-lock-comment-face "orangered") ; redish comments
-      (set-face-background 'mode-line "firebrick")))) ; make active buffer more visible
+    (defun my/modus-themes-custom-faces ()
+      ;; Override and define some faces
+      (modus-themes-with-colors
+        (custom-set-faces
+         `(font-lock-my-argument-use-face ((,c :foreground ,cyan-faint)))
+         `(font-lock-function-call-face ((,c :foreground ,magenta-faint)))
+         `(font-lock-variable-use-face ((,c :foreground ,fg-main)))
+         `(font-lock-property-use-face ((,c :foreground ,cyan-warmer)))
+         `(font-lock-bracket-face ((,c :foreground ,fg-mode-line-active)))
+         `(font-lock-number-face ((,c :foreground ,yellow-warmer)))
+         )))
+    (add-hook 'modus-themes-after-load-theme-hook #'my/modus-themes-custom-faces)
+
+    (load-theme 'modus-vivendi))
+   ((>= emacs-major-version 28)         ; modus-themes 3.0.0
+    (require-theme 'modus-themes)
+
+    ;; tone down the contrast between fg and bg
+    (setq modus-themes-vivendi-color-overrides
+          '((bg-main . "#050505") (fg-main . "#f0f0f0") (fg-max . "#ffffff"))
+          modus-themes-operandi-color-overrides
+          '((bg-main . "#fafafa") (fg-main . "#0f0f0f") (fg-max . "#000000")))
+
+    (setq modus-themes-tabs-accented t
+          modus-themes-fringes 'subtle
+          modus-themes-mode-line '(borderless accented)
+          modus-themes-hl-line '()
+          modus-themes-prompts '(intense)
+          modus-themes-bold-constructs nil
+          modus-themes-italic-constructs t
+          modus-themes-syntax '(yellow-comments green-strings)
+          modus-themes-paren-match '(bold intense)
+          modus-themes-region '(bg-only)
+          modus-themes-completions '(opinionated)
+          modus-themes-box-buttons '(0.9)
+          ;; org-mode
+          modus-themes-headings '((t . (rainbow)))
+          modus-themes-scale-headings t
+          modus-themes-org-blocks 'gray-background)
+
+    (defun my/modus-themes-custom-faces ()
+      ;; Override and define faces
+      (modus-themes-with-colors
+        (custom-set-faces
+         `(font-lock-my-argument-use-face ((,class :foreground ,green-alt-other-faint)))
+         `(font-lock-function-call-face ((,class :foreground ,magenta-faint)))
+         `(font-lock-variable-use-face ((,class :foreground ,fg-main)))
+         `(font-lock-property-use-face ((,class :foreground ,cyan-alt-faint)))
+         `(font-lock-bracket-face ((,class :foreground ,(modus-themes-color 'fg-max))))
+         `(font-lock-number-face ((,class :foreground ,yellow-alt))) ; yellow-faint?
+         )))
+    (add-hook 'modus-themes-after-load-theme-hook #'my/modus-themes-custom-faces)
+
+    (modus-themes-load-vivendi))
+   (t
+    (load-theme 'wombat t)                          ; cool dark builtin theme
+    (set-face-background 'default "#090909")        ; really dark for better contrast
+    (set-face-foreground 'font-lock-comment-face "orangered") ; redish comments
+    (set-face-background 'mode-line "firebrick")))) ; make active buffer more visible
 
 ;; setup package repos for M-x package-*
 (require 'package)
