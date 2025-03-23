@@ -386,7 +386,19 @@
 (when (display-graphic-p)
   (use-package company-quickhelp :ensure t :defer t))
 
-;;; LSP
+;;; eglot - M-x eglot to start
+(when (>= emacs-major-version 29)
+  (use-package eglot :ensure nil
+    :bind (:map eglot-mode-map
+                ("C-c l a" . eglot-code-actions)
+                ("C-c l o" . eglot-code-actions-organize-imports)
+                ("C-c l r" . eglot-rename)
+                ("C-c l f" . eglot-format)))
+    (use-package flycheck-eglot :ensure t
+    :after (flycheck eglot)
+    :config (global-flycheck-eglot-mode 1)))
+
+;;; LSP - M-x lsp to start
 (use-package lsp-mode :ensure t
   :commands (lsp lsp-deferred)
   :init
