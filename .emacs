@@ -477,6 +477,9 @@
 (when (display-graphic-p)
   (use-package company-quickhelp :ensure t :defer t))
 
+;; Treesitter
+(when (>= emacs-major-version 31) (customize-set-variable 'treesit-enabled-modes t))
+
 ;;; eglot - M-x eglot to start
 (when (>= emacs-major-version 29)
   (use-package eglot :ensure nil
