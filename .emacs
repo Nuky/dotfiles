@@ -2,13 +2,12 @@
 
 ;;; Commentary:
 
-;; Works on Emacs 26.1, 27.1, 28.1, 29.1, 30.1
+;; Works on Emacs 28.1 and newer (tested up to 31.1).
 ;; Uses builtin package.el and use-package.
 ;;
 ;; To install, simply symlink or add the following to ~/.emacs:
 ;;
 ;; ;;; Load generic version
-;; ;;(package-initialize)
 ;; (load "~/dotfiles/.emacs")
 
 ;;; Code:
@@ -68,36 +67,47 @@
             (bg-region bg-lavender)
             (fg-region unspecified)
             ;; easy to spot cursor
-            (cursor magenta-intense)))
+            (cursor magenta-intense)
+	    ;; minibuffer prompts
+	    (fg-prompt cyan-intense)
+	    ;(bg-prompt bg-cyan-subtle)
+	    ;; org-mode headers
+	    (fg-heading-1 rainbow-1)
+	    (fg-heading-2 rainbow-2)
+	    (fg-heading-3 rainbow-3)
+	    (fg-heading-4 rainbow-4)
+	    (fg-heading-5 rainbow-5)
+	    (fg-heading-6 rainbow-6)
+	    (fg-heading-7 rainbow-7)
+	    (fg-heading-8 rainbow-8)
+	    ))
 
     ;; https://protesilaos.com/emacs/modus-themes-changelog (see 4.0.0)
-    (setq modus-themes-prompts '(intense)
-          modus-themes-bold-constructs nil
+    (setq modus-themes-bold-constructs nil
           modus-themes-italic-constructs t
-          modus-themes-completions '(opinionated)
-          ;; org-mode
-          modus-themes-headings '((1 . (rainbow 1.6))
-                                  (2 . (rainbow 1.4))
-                                  (3 . (rainbow 1.2))
-                                  (4 . (rainbow 1.1))
-                                  (t . (rainbow)))
+          modus-themes-completions '((matches . (extrabold))
+                                     (selection . (semibold italic)))
+          ;; org-mode headers heights (color comes from fg-heading-N overrides above)
+          modus-themes-headings '((1 . (1.6))
+                                  (2 . (1.4))
+                                  (3 . (1.2))
+                                  (4 . (1.1))
+                                  (t . t))
     )
 
-    (defun my/modus-themes-custom-faces ()
+    (defun my/modus-themes-custom-faces (&rest _)
       ;; Override and define some faces
       (modus-themes-with-colors
-        (custom-set-faces
-         `(font-lock-my-argument-use-face ((,c :foreground ,cyan-faint)))
-         `(font-lock-function-call-face ((,c :foreground ,magenta-faint)))
-         `(font-lock-variable-use-face ((,c :foreground ,fg-main)))
-         `(font-lock-property-use-face ((,c :foreground ,cyan-warmer)))
-         `(font-lock-bracket-face ((,c :foreground ,fg-mode-line-active)))
-         `(font-lock-number-face ((,c :foreground ,yellow-warmer)))
-         )))
-    (add-hook 'modus-themes-after-load-theme-hook #'my/modus-themes-custom-faces)
+         (face-spec-set 'font-lock-my-argument-use-face `((,c :foreground ,cyan-faint)))
+         (face-spec-set 'font-lock-function-call-face `((,c :foreground ,magenta-faint)))
+         (face-spec-set 'font-lock-variable-use-face `((,c :foreground ,fg-main)))
+         (face-spec-set 'font-lock-property-use-face `((,c :foreground ,cyan-warmer)))
+         (face-spec-set 'font-lock-bracket-face `((,c :foreground ,fg-mode-line-active)))
+         (face-spec-set 'font-lock-number-face `((,c :foreground ,yellow-warmer)))))
 
-    (load-theme 'modus-vivendi))
-   ((>= emacs-major-version 28)         ; modus-themes 3.0.0
+    (add-hook 'modus-themes-after-load-theme-hook #'my/modus-themes-custom-faces)
+    (modus-themes-load-theme 'modus-vivendi))
+   (t                                   ; Emacs 28-29: older modus-themes API (3.0.0)
     (require-theme 'modus-themes)
 
     ;; tone down the contrast between fg and bg
@@ -136,26 +146,20 @@
          )))
     (add-hook 'modus-themes-after-load-theme-hook #'my/modus-themes-custom-faces)
 
-    (modus-themes-load-vivendi))
-   (t
-    (load-theme 'wombat t)                          ; cool dark builtin theme
-    (set-face-background 'default "#090909")        ; really dark for better contrast
-    (set-face-foreground 'font-lock-comment-face "orangered") ; redish comments
-    (set-face-background 'mode-line "firebrick")))) ; make active buffer more visible
+    (modus-themes-load-vivendi))))
 
 ;; setup package repos for M-x package-*
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (setq package-archive-priorities '(("gnu" . 5) ; default gnu elpa
                                    ("melpa" . 0)))
-(when (< emacs-major-version 27)
-  (package-initialize))
 ;;(package-install-selected-packages)
 
 ;;; Bootstrap use-package
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+(when (< emacs-major-version 29)
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package)))
 (setq use-package-verbose t)            ; log package loading times
 
 (eval-when-compile
@@ -208,11 +212,12 @@
 (setq-default indent-tabs-mode nil)                  ; Use spaces for indentation
 (setq x-stretch-cursor t)                            ; Draw cursor as wide as the glyph under point
 (setq auto-window-vscroll nil)                       ; Workaround performance issues with next-line
-(when (>= emacs-major-version 27) (global-so-long-mode 1)); Mitigate slowness due to very long lines
+(global-so-long-mode 1)                              ; Mitigate slowness due to very long lines
 (when (display-graphic-p) (setq confirm-kill-emacs 'y-or-n-p)); Prevent quitting by accident
 
 ;; forbid moving point into read-only part of the prompt
-(plist-put minibuffer-prompt-properties 'point-entered 'minibuffer-avoid-prompt)
+(setq minibuffer-prompt-properties '(read-only t cursor-intangible t face minibuffer-prompt))
+(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
 ;; clickable URLs
 (add-hook 'text-mode-hook 'goto-address-mode)
@@ -267,19 +272,11 @@
   :bind (("M-<up>" . windmove-up)
          ("M-<down>" . windmove-down)
          ("M-<left>" . windmove-left)
-         ("M-<right>" . windmove-right)))
-(if (>= emacs-major-version 27)
-    (use-package windmove :ensure nil
-      :bind (("M-S-<up>" . windmove-swap-states-up)
-             ("M-S-<down>" . windmove-swap-states-down)
-             ("M-S-<left>" . windmove-swap-states-left)
-             ("M-S-<right>" . windmove-swap-states-right)))
-  ;; fallback to buffer-move when windmove-swap-states is not yet available
-  (use-package buffer-move :ensure t
-    :bind (("M-S-<up>" . buf-move-up)
-           ("M-S-<down>" . buf-move-down)
-           ("M-S-<left>" . buf-move-left)
-           ("M-S-<right>" . buf-move-right))))
+         ("M-<right>" . windmove-right)
+         ("M-S-<up>" . windmove-swap-states-up)
+         ("M-S-<down>" . windmove-swap-states-down)
+         ("M-S-<left>" . windmove-swap-states-left)
+         ("M-S-<right>" . windmove-swap-states-right)))
 
 ;;; ivy -- interactive completion for most things
 (use-package ivy :ensure t
@@ -294,7 +291,7 @@
   (setq ivy-count-format "(%d/%d) ") ; display number of matches in prompt
   (setq ivy-initial-inputs-alist nil)
   ;; somewhat hide rarely used buffers
-  (add-to-list 'ivy-ignore-buffers "^\*")
+  (add-to-list 'ivy-ignore-buffers "^\\*")
   (add-to-list 'ivy-ignore-buffers "^[tT][aA][gG][sS]$")
   :bind (([remap switch-to-buffer] . ivy-switch-buffer)
          ([remap switch-to-buffer-other-window] . ivy-switch-buffer-other-window)))
@@ -641,7 +638,7 @@
   ("scala" . scala-mode))
 
 ;;; .lua files support
-(use-package lua-mode :defer t)
+(use-package lua-mode :ensure t :defer t)   ; built in since Emacs 31; :ensure t only installs it on older versions
 
 ;;; .yml files support
 (use-package yaml-mode :ensure t
