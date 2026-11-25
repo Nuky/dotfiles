@@ -483,11 +483,21 @@
 ;;; eglot - M-x eglot to start
 (when (>= emacs-major-version 29)
   (use-package eglot :ensure nil
+    :custom
+    (eglot-autoshutdown t)                  ; stop the server when its last buffer closes
+    (eglot-events-buffer-config '(:size 0 :format full)) ; no JSON-RPC log (faster); set :size back to 2000000 to debug
     :bind (:map eglot-mode-map
                 ("C-c l a" . eglot-code-actions)
                 ("C-c l o" . eglot-code-actions-organize-imports)
                 ("C-c l r" . eglot-rename)
-                ("C-c l f" . eglot-format)))
+                ("C-c l f" . eglot-format)
+                ("C-c l d" . eglot-find-declaration)
+                ("C-c l i" . eglot-find-implementation)
+                ("C-c l t" . eglot-find-typeDefinition)
+                ("C-c l c" . eglot-show-call-hierarchy)
+                ("C-c l h" . eglot-show-type-hierarchy)
+                ("<f7>" . eglot-momentary-inlay-hints)
+                ("C-c l H" . eglot-inlay-hints-mode)))   ; toggle inline hints
     (use-package flycheck-eglot :ensure t
     :after (flycheck eglot)
     :config (global-flycheck-eglot-mode 1)))
