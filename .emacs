@@ -240,9 +240,13 @@
 ;; frame title
 (setq frame-title-format '("%b" (buffer-file-name ": %f") " [" (:eval mode-name) "]"))
 
+;; nerd-icons -- icons for doom-modeline, magit and others
+;; Once per machine: M-x nerd-icons-install-fonts (installs Symbols Nerd Font Mono)
+(when (display-graphic-p)
+  (use-package nerd-icons :ensure t :defer t))
+
 ;; doom-modeline -- Neat modeline
 (when (display-graphic-p)
-  (use-package all-the-icons :ensure t)  ; make sure to run `M-x all-the-icons-install-fonts` once
   (use-package doom-modeline :ensure t :defer t
     :hook (after-init . doom-modeline-mode)
     :custom
