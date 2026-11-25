@@ -502,13 +502,69 @@
     :after (flycheck eglot)
     :config (global-flycheck-eglot-mode 1)))
 
+;;; breadcrumb -- project path and symbol path (e.g. "class > method") in the header line
+;; Only turns on in file buffers that belong to a project; uses project.el and imenu (eglot-enriched).
+(use-package breadcrumb :ensure t
+  :init (breadcrumb-mode 1)            ; :init, since :bind defers loading (the mode is autoloaded)
+  :bind ("M-g b" . breadcrumb-jump)    ; imenu-like jump showing breadcrumb paths
+  :custom
+  (breadcrumb-imenu-crumb-separator " › ")
+  (breadcrumb-project-max-length 0.5)  ; fractions of the window width (default 0.3), as in Prot's config
+  (breadcrumb-imenu-max-length 1.0)
+  :config
+  ;; Leading space, and an icon for each symbol's kind (class, method, variable...).
+  ;; Eglot marks imenu names with an `imenu-kind' text property (the LSP symbol kind name),
+  ;; and breadcrumb keeps text properties when building the header, so the kinds can be
+  ;; read back from the final string.  Buffers without eglot just get the plain crumbs.
+  ;; `breadcrumb--header-line' is internal (named `bc--header-line' in the source).
+  (defun my/breadcrumb--kind-icon (kind)
+    "Return a nerd-icons codicon for the LSP symbol KIND name, or nil."
+    (pcase kind
+      ((or "Class" "Struct" "Interface" "Enum") (nerd-icons-codicon "nf-cod-symbol_class"))
+      ((or "Method" "Function" "Constructor") (nerd-icons-codicon "nf-cod-symbol_method"))
+      ((or "Variable" "Constant" "Field" "Property") (nerd-icons-codicon "nf-cod-symbol_variable"))
+      ((or "Module" "Namespace" "Package") (nerd-icons-codicon "nf-cod-symbol_namespace"))))
+
+  (defun my/breadcrumb--add-kind-icons (s)
+    "Insert a kind icon before each crumb in S that carries an `imenu-kind' property."
+    (let ((pos 0) (out ""))
+      (while pos
+        (let* ((next (next-single-property-change pos 'imenu-kind s))
+               (icon (and (display-graphic-p) (fboundp 'nerd-icons-codicon)
+                          (my/breadcrumb--kind-icon (get-text-property pos 'imenu-kind s)))))
+          (setq out (concat out (if icon (concat icon " ") "") (substring s pos next))
+                pos next)))
+      out))
+
+  (defun my/breadcrumb-header-line-decorate (crumbs)
+    "Filter-return advice for `breadcrumb--header-line': leading space and symbol-kind icons."
+    (concat " " (my/breadcrumb--add-kind-icons crumbs)))
+  (advice-add 'breadcrumb--header-line :filter-return #'my/breadcrumb-header-line-decorate)
+  ;; A little vertical padding around every header line (flat-button: box drawn in the background color).
+  ;; Emacs 31 draws non-selected windows with `header-line-inactive', which modus defines
+  ;; without inheriting from `header-line', so it needs the padding too.
+  (dolist (face '(header-line header-line-inactive))
+    (when (facep face)
+      (face-spec-set face '((t :box (:line-width (1 . 3) :style flat-button)))))))
+
 ;;; LSP - M-x lsp to start
 (use-package lsp-mode :ensure t
   :commands (lsp lsp-deferred)
   :init
   (setq lsp-keymap-prefix "C-c l")
   :config
-  (lsp-enable-which-key-integration t))
+  (lsp-enable-which-key-integration t)
+  ;; lsp-mode shows its own header-line breadcrumb (`lsp-headerline-breadcrumb-enable' is t by
+  ;; default); hide breadcrumb.el in those buffers, and bring it back if lsp's one is turned off.
+  (defun my/breadcrumb-yield-to-lsp ()
+    "Turn `breadcrumb-local-mode' off while `lsp-headerline-breadcrumb-mode' is on."
+    (when (fboundp 'breadcrumb-local-mode)
+      (if lsp-headerline-breadcrumb-mode
+          (breadcrumb-local-mode -1)
+        (when (and (bound-and-true-p breadcrumb-mode)
+                   (fboundp 'breadcrumb--turn-on-local-mode-on-behalf-of-global-mode))
+          (breadcrumb--turn-on-local-mode-on-behalf-of-global-mode)))))
+  (add-hook 'lsp-headerline-breadcrumb-mode-hook #'my/breadcrumb-yield-to-lsp))
 
 (use-package lsp-ui :ensure t
   :hook (lsp-mode . lsp-ui-mode))
