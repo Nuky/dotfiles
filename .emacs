@@ -201,6 +201,7 @@
 (setq uniquify-buffer-name-style 'forward)           ; Add parent dirs to buffer names when ambiguous
 (set-default 'indicate-empty-lines t)                ; Mark end of file lines in fringe
 (set-default 'indicate-buffer-boundaries 'left)      ; Mark buffer boundaries in fringe
+(setq create-lockfiles nil)                          ; Do not create .#lock files
 (setq make-backup-files nil)                         ; Do not create backup~ files
 (setq delete-old-versions t)                         ; Silently delete old backup~ files
 (setq delete-auto-save-files t)                      ; Delete #autosave# files on save
