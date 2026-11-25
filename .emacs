@@ -693,17 +693,13 @@
   :mode ("\\.tsx$" . web-mode))
 
 ;;; Go IDE
-(use-package go-mode :defer t
-  :config
-  ;; format file before save using goimports
-  (setq gofmt-command "goimports")
-  (add-hook 'before-save-hook 'gofmt-before-save)
-  (use-package company-go :ensure t
-    :bind (:map go-mode-map
-                ("M-." . godef-jump)))
-  (push 'company-go company-backends)
-  (use-package go-eldoc :ensure t)
-  (add-hook 'go-mode-hook 'go-eldoc-setup))
+(use-package go-ts-mode :ensure nil :defer t
+  :init
+  ;; Needs gopls on PATH
+  (defun my/eglot-ensure-if-gopls ()
+    (when (executable-find "gopls")
+      (eglot-ensure)))
+  :hook ((go-ts-mode go-mod-ts-mode) . my/eglot-ensure-if-gopls))
 
 ;;; .tf files support
 (use-package terraform-mode :defer t
