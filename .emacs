@@ -379,6 +379,11 @@
 (use-package magit :ensure t :defer t
   :config
   (setq magit-completing-read-function 'ivy-completing-read)
+  :custom
+  ;; file icons in status/diff buffers in graphical frames (nerd-icons is declared above)
+  (magit-format-file-function (if (display-graphic-p)
+                                  #'magit-format-file-nerd-icons
+                                #'magit-format-file-default))
   :bind ("C-x g" . magit-status))
 
 ;;; treemacs -- sidebar tree layout file explorer
