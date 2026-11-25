@@ -439,13 +439,9 @@
   :init
   (global-flycheck-mode))
 
-;;; show ansi colors in compile buffer
+;;; show ansi colors in compile buffers
 (use-package ansi-color :ensure nil
-  :config
-  (defun my-colorize-compilation-buffer ()
-    (when (eq major-mode 'compilation-mode)
-      (ansi-color-apply-on-region compilation-filter-start (point-max))))
-  :hook (compilation-filter . my-colorize-compilation-buffer))
+  :hook (compilation-filter . ansi-color-compilation-filter))
 
 ;;; Company completion menu for everything
 (use-package company :ensure t
