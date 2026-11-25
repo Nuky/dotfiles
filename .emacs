@@ -375,6 +375,16 @@
          (dired-mode . my-projectile-find-file-hook-first-time))
   :bind (:map projectile-mode-map ("C-c p" . projectile-command-map)))
 
+;;; dired -- file manager
+(use-package dired :ensure nil :defer t
+  :custom
+  (dired-dwim-target t)                          ; copy/rename into the other dired window by default
+  (dired-kill-when-opening-new-dired-buffer t)   ; reuse one dired buffer while navigating
+  :hook (dired-mode . dired-hide-details-mode))  ; ( toggles the details
+(when (display-graphic-p)
+  (use-package nerd-icons-dired :ensure t :defer t
+    :hook (dired-mode . nerd-icons-dired-mode)))
+
 ;;; magit -- Git interface
 (use-package magit :ensure t :defer t
   :config
