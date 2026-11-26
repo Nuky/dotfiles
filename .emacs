@@ -674,29 +674,14 @@
 
   :hook (python-ts-mode . my/python-ts-mode-hook))
 
-;;; Typescript IDE
-;; for yarn PnP support, run:
-;;   YARN_ENABLE_IMMUTABLE_CACHE=false YARN_ENABLE_NETWORK=true yarn dlx @yarnpkg/sdks base
-;; also see: https://github.com/ramblehead/.emacs.d/blob/master/lisp/yarn-pnp.el
-(use-package typescript-mode :defer t)
-(use-package tide :defer t
-  :after (:all (:any typescript-mode js) company flycheck)
+;;; TypeScript/JavaScript IDE
+(use-package typescript-ts-mode :ensure nil :defer t
   :init
-  ;; somehow js-mode does not work with :hook, so here we go:
-  (add-hook 'js-mode-hook #'tide-setup)
-  (add-hook 'js-mode-hook #'tide-hl-identifier-mode)
-  :hook ((typescript-mode . tide-setup)
-         (typescript-mode . tide-hl-identifier-mode)
-         ))
-(use-package web-mode
-  :config
-  (flycheck-add-mode 'javascript-eslint 'web-mode)
-  (defun my/setup-tide-for-tsx()
-    (when (string-equal "tsx" (file-name-extension buffer-file-name))
-      (tide-setup)
-      (tide-hl-identifier-mode)))
-  :hook (web-mode . my/setup-tide-for-tsx)
-  :mode ("\\.tsx$" . web-mode))
+  ;; Needs typescript-language-server on PATH
+  (defun my/eglot-ensure-if-ts-server ()
+    (when (executable-find "typescript-language-server")
+      (eglot-ensure)))
+  :hook ((typescript-ts-mode tsx-ts-mode js-ts-mode) . my/eglot-ensure-if-ts-server))
 
 ;;; Go IDE
 (use-package go-ts-mode :ensure nil :defer t
