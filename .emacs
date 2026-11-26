@@ -16,8 +16,17 @@
 (setq gc-cons-threshold (* 20 1024 1024))
 (add-hook 'after-init-hook (lambda () (setq gc-cons-threshold (* 2 1024 1024))))
 
-;; disable running regexes on filenames when loading .el files, speeding up emacs
-(setq-local file-name-handler-alist nil)
+;; skip file name handlers when loading .el files during the startup, speeding it up
+;; note: assumes startup loads no compressed .el.gz files.
+(defvar my/file-name-handler-alist file-name-handler-alist)
+(setq file-name-handler-alist nil)
+(add-hook 'after-init-hook
+          ;; merge and restore just before files named on the command line are visited
+          (lambda ()
+            (setq file-name-handler-alist
+                  (delete-dups (append file-name-handler-alist my/file-name-handler-alist))))
+          100)
+
 
 ;; setup a cozy welcome screen
 (setq inhibit-startup-message t)        ; No startup message in minibuffer
