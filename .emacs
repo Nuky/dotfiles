@@ -737,11 +737,6 @@
 ;;; .yml files support
 (use-package yaml-mode :ensure t)
 
-;;; 3D .obj/.mtl files support
-(use-package wavefront-obj-mode
-  :mode (("\\.obj$" . wavefront-obj-mode)
-         ("\\.mtl$" . wavefront-obj-mode)))
-
 ;;; tweaks when console
 (unless (display-graphic-p)
   (xterm-mouse-mode)                                 ; enable xterm mouse support
