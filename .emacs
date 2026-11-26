@@ -153,6 +153,12 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (setq package-archive-priorities '(("gnu" . 5) ; default gnu elpa
                                    ("melpa" . 0)))
+;; ivy 0.15.1 (latest release) breaks on Emacs 31: it passes a nil predicate to `cl-remove-if-not'
+;; (e.g. eglot's code-action menu fails with "void-function nil").  Fixed upstream in swiper commit
+;; 631df3f6; use MELPA's snapshot builds until a release after 0.15.1, then remove this.
+(when (>= emacs-major-version 31)
+  (dolist (pkg '(ivy counsel swiper))
+    (add-to-list 'package-pinned-packages (cons pkg "melpa"))))
 ;;(package-install-selected-packages)
 
 ;;; Bootstrap use-package
