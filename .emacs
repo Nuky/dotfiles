@@ -600,29 +600,37 @@
               ("C-c F" . clang-format-buffer)))
 
 ;;; Python IDE
-(use-package elpy :ensure t :defer t
-  :commands elpy-enable
-  :init
-  (if (< emacs-major-version 29)
-      (advice-add 'python-mode :before 'elpy-enable)
-    ;; TODO possibly simpler in emacs 30
-    (advice-add 'python-base-mode :before 'elpy-enable)
-    ;; Fix until elpy-mode properly supports python-ts-mode
-    (add-hook 'python-ts-mode-hook 'elpy-mode))
-  :config
-  ;; use flycheck rather than flymake
-  (remove-hook 'elpy-modules 'elpy-module-flymake)
+;;(use-package elpy :ensure t :defer t
+;;  :commands elpy-enable
+;;  :init
+;;  (if (< emacs-major-version 29)
+;;      (advice-add 'python-mode :before 'elpy-enable)
+;;    ;; TODO possibly simpler in emacs 30
+;;    (advice-add 'python-base-mode :before 'elpy-enable)
+;;    ;; Fix until elpy-mode properly supports python-ts-mode
+;;    (add-hook 'python-ts-mode-hook 'elpy-mode))
+;;  :config
+;;  ;; use flycheck rather than flymake
+;;  (remove-hook 'elpy-modules 'elpy-module-flymake)
+;;  :custom
+;;  (elpy-rpc-python-command "python3")
+;;  (elpy-rpc-ignored-buffer-size 409600) ; default is 102400
+;;  (elpy-rpc-timeout 2)                  ; default is 1
+;;  :bind (:map elpy-mode-map
+;;              ("C-c f" . elpy-format-code)
+;;              ;; restore windmove keybinds
+;;              ("M-<up>" . nil)
+;;              ("M-<down>" . nil)
+;;              ("M-<left>" . nil)
+;;              ("M-<right>" . nil)))
+
+;;; pet -- use each project's virtualenv tools (flycheck, eglot, run-python, pytest, ruff-format...)
+(use-package pet :ensure t :defer t
+  :init (add-hook 'python-base-mode-hook #'pet-mode -10)   ; before other Python hooks
   :custom
-  (elpy-rpc-python-command "python3")
-  (elpy-rpc-ignored-buffer-size 409600) ; default is 102400
-  (elpy-rpc-timeout 2)                  ; default is 1
-  :bind (:map elpy-mode-map
-              ("C-c f" . elpy-format-code)
-              ;; restore windmove keybinds
-              ("M-<up>" . nil)
-              ("M-<down>" . nil)
-              ("M-<left>" . nil)
-              ("M-<right>" . nil)))
+  ; for performance, look for config files only at the project root and in parent directories
+  (pet-find-file-functions '(pet-find-file-from-project-root pet-locate-dominating-file)))
+
 
 (use-package python-ts-mode :ensure nil :defer t
   :init
