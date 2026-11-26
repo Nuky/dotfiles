@@ -641,15 +641,6 @@
 (use-package python-ts-mode :ensure nil :defer t
   :init
   (defun my/python-ts-mode-hook ()
-    (when (< emacs-major-version 29)
-      ;; workaround for treesit not supporting "not in" and "is not" keywords
-      (add-to-list 'treesit-font-lock-settings
-                   (car (treesit-font-lock-rules
-                         :language 'python
-                         :feature 'keyword
-                         '(["not in" "is not"] @font-lock-keyword-face)))
-                   t))
-
     ;; lambda/def keyword parameters
     (add-to-list 'treesit-font-lock-settings
                  (car (treesit-font-lock-rules
