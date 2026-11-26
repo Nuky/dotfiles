@@ -559,8 +559,8 @@
     (when (facep face)
       (face-spec-set face '((t :box (:line-width (1 . 3) :style flat-button)))))))
 
-;;; LSP - M-x lsp to start
-(use-package lsp-mode :ensure t
+;;; LSP - M-x lsp to start (optional: eglot is the default)
+(use-package lsp-mode :defer t
   :commands (lsp lsp-deferred)
   :init
   (setq lsp-keymap-prefix "C-c l")
@@ -578,10 +578,10 @@
           (breadcrumb--turn-on-local-mode-on-behalf-of-global-mode)))))
   (add-hook 'lsp-headerline-breadcrumb-mode-hook #'my/breadcrumb-yield-to-lsp))
 
-(use-package lsp-ui :ensure t
+(use-package lsp-ui :defer t
   :hook (lsp-mode . lsp-ui-mode))
 
-(use-package lsp-ivy :ensure t
+(use-package lsp-ivy :defer t
   :commands lsp-ivy-workspace-symbol)
 
 ;;; C/C++
