@@ -726,10 +726,10 @@
   :mode ("\\.thrift$" . thrift-mode))
 
 ;;; .feature files support
-(use-package feature-mode :ensure t :defer t)
+(use-package feature-mode :defer t)
 
 ;;; .scala files support
-(use-package scala-mode :ensure t :defer t
+(use-package scala-mode :defer t
   :interpreter
   ("scala" . scala-mode))
 
