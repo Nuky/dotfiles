@@ -257,7 +257,6 @@
     :hook (after-init . doom-modeline-mode)
     :custom
     (doom-modeline-buffer-encoding :nondefault)
-    (doom-modeline-check-simple-format 1) ; detailed is better but we can't tell when flycheck is still running
     (doom-modeline-vcs-max-length 18)
     ;(doom-modeline-buffer-file-name-style 'truncate-upto-project)
     (doom-modeline-hud t)                 ; show buffer position/size as a scrollbar/minimap in the left-most part of the modeline
