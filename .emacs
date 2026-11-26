@@ -717,6 +717,9 @@
 ;;; .json files support
 (use-package json-mode :ensure t :defer t)
 
+;;; .graphql/.gql files support
+(use-package graphql-mode :defer t)
+
 ;;; .proto files support
 (use-package protobuf-mode :ensure t :defer t)
 
