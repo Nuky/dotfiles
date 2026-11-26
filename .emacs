@@ -505,7 +505,16 @@
                 ("<f7>" . eglot-momentary-inlay-hints)
                 ("C-c l H" . eglot-inlay-hints-mode)))   ; toggle inline hints
 
-  (global-flycheck-eglot-mode 1))
+  (global-flycheck-eglot-mode 1)
+
+  ;; Run these command checkers after eglot's diagnostics, where their mode applies.
+  ;; `flycheck-eglot-exclusive' cannot be used reliably to control chains per mode
+  ;; flycheck skips chained checkers that don't support the buffer's mode.
+  (defun my/flycheck-eglot-chain ()
+    (dolist (checker '(python-ruff yaml-actionlint))
+      (unless (memq checker (flycheck-checker-get 'eglot-check 'next-checkers))
+        (flycheck-add-next-checker 'eglot-check checker 'append))))
+  (add-hook 'eglot-managed-mode-hook #'my/flycheck-eglot-chain 90)) ; after the bridge's hook
 
 ;;; breadcrumb -- project path and symbol path (e.g. "class > method") in the header line
 ;; Only turns on in file buffers that belong to a project; uses project.el and imenu (eglot-enriched).
