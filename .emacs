@@ -733,7 +733,7 @@
 (use-package lua-mode :ensure t :defer t)   ; built in since Emacs 31; :ensure t only installs it on older versions
 
 ;;; .yml files support
-(use-package yaml-mode :ensure t)
+(use-package yaml-mode :ensure t :defer t)
 
 ;;; tweaks when console
 (unless (display-graphic-p)
