@@ -275,7 +275,6 @@
 ;; ultra-scroll -- Butter smooth scrolling
 (when (and (>= emacs-major-version 29) (display-graphic-p) (memq window-system '(mac ns x)))
   (use-package ultra-scroll :ensure t
-    :vc (:url "https://github.com/jdtsmith/ultra-scroll")
     :init
     (setq scroll-conservatively 101 ; important !
           scroll-margin 3)
