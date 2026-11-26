@@ -504,9 +504,8 @@
                 ("C-c l h" . eglot-show-type-hierarchy)
                 ("<f7>" . eglot-momentary-inlay-hints)
                 ("C-c l H" . eglot-inlay-hints-mode)))   ; toggle inline hints
-    (use-package flycheck-eglot :ensure t
-    :after (flycheck eglot)
-    :config (global-flycheck-eglot-mode 1)))
+
+  (global-flycheck-eglot-mode 1))
 
 ;;; breadcrumb -- project path and symbol path (e.g. "class > method") in the header line
 ;; Only turns on in file buffers that belong to a project; uses project.el and imenu (eglot-enriched).
