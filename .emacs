@@ -738,8 +738,7 @@
 (use-package lua-mode :ensure t :defer t)   ; built in since Emacs 31; :ensure t only installs it on older versions
 
 ;;; .yml files support
-(use-package yaml-mode :ensure t
-  :mode ("\\.yml$" . yaml-mode))
+(use-package yaml-mode :ensure t)
 
 ;;; 3D .obj/.mtl files support
 (use-package wavefront-obj-mode
