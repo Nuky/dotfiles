@@ -723,12 +723,6 @@
 ;;; .proto files support
 (use-package protobuf-mode :ensure t :defer t)
 
-;;; .thrift files support
-(use-package thrift :defer t
-  :config
-  (setq thrift-indent-level 4)
-  :mode ("\\.thrift$" . thrift-mode))
-
 ;;; .feature files support
 (use-package feature-mode :defer t)
 
